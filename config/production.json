@@ -1,0 +1,4 @@
+{
+    "mongoURL": "mongodb+srv://admin:admin@first-mern-app.vrxzz.mongodb.net/First-MERN-App?retryWrites=true&w=majority",
+    "jwtSecret": "mySecretToken"
+}
