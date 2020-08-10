@@ -48,15 +48,13 @@ const RootQuery = new GraphQLObjectType( {
         user: {
             type:UserType,
             async resolve( parent, args, request ) {
-                const { authentication } = request.headers;
+                const { authorization } = request.headers;
                 
-                if( authentication ) {
+                if( authorization ) {
                     
-                    const { user } = jwt.verify( authentication, 'mySecretToken' );
+                    const { user } = jwt.verify( authorization, 'mySecretToken' );
 
                     const _user = await User.findById( user.id );
-
-                    console.log( _user );
                     
                     return _user;
                 }

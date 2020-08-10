@@ -1,7 +1,12 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
+import { useQuery } from '@apollo/client';
+import { getUserQuery } from '../client/query/user';
+import { get } from 'lodash';
 
 export default function Home() {
+  const { loading, error, data } = useQuery( getUserQuery );
+  const name = get( data, 'user.name', `to <a href="https://nextjs.org">Next.js!</a>` );
   return (
     <div className={styles.container}>
       <Head>
@@ -11,7 +16,11 @@ export default function Home() {
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
+          Welcome <span
+            dangerouslySetInnerHTML = { {
+                __html: name
+            } }
+          />
         </h1>
 
         <p className={styles.description}>
