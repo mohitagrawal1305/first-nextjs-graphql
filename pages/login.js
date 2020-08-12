@@ -1,15 +1,23 @@
 import Head from 'next/head'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useMutation, useQuery } from '@apollo/client';
-import { loginMutation } from '../client/mutations/login';
-
-import { getUserQuery } from '../client/query/user';
-
+import { loginMutation } from '../frontend/services/mutations/login';
+import { getUserQuery } from '../frontend/services/query/user';
+import { useRouter } from 'next/router'
 
 export default function Login() {
   const { client, loading, error, data } = useQuery( getUserQuery );
 
+  const router = useRouter();
+
   const [ loginUser ] = useMutation( loginMutation );
+
+  useEffect( () => {
+    const token = localStorage.getItem('token');
+    if( token ) {
+      router.push('/');
+    }
+  }, [] );
 
   const [ formData, setFormData ] = useState( {
     email: '',
@@ -33,9 +41,14 @@ export default function Login() {
       variables: formData
     } );
     const token = data.login.token;
-    localStorage.setItem( 'token', token );
 
-    client.resetStore();
+    if( token ) {
+
+      localStorage.setItem( 'token', token );
+  
+      client.resetStore();
+      router.push('/');
+    }
 
   };
   return (

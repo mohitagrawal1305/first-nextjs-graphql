@@ -1,10 +1,10 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 
-import database from '../../config/db';
+import database from '../../backend/config/db';
 
 const { graphqlHTTP } = require('express-graphql');
 
-const schema = require( '../../schema/schema' );
+const schema = require( '../../backend/schema/schema' );
 
 database();
 

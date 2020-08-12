@@ -1,4 +1,4 @@
-import '../styles/globals.css'
+import '../frontend/styles/globals.css'
 import { ApolloProvider, ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 

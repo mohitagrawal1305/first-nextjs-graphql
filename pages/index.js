@@ -1,7 +1,7 @@
 import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import styles from '../frontend/styles/Home.module.css'
 import { useQuery } from '@apollo/client';
-import { getUserQuery } from '../client/query/user';
+import { getUserQuery } from '../frontend/services/query/user';
 import { get } from 'lodash';
 
 export default function Home() {
