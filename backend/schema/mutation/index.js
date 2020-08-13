@@ -2,7 +2,7 @@ const graphql = require( 'graphql' );
 const Book = require( '../../models/Book' );
 const Author = require( '../../models/Author' );
 const { AuthorType, BookType, LoginType } = require('../types');
-const loginResolver = require( '../../resolvers/login' );
+const { login, loginUsingGoogle } = require( '../../resolvers/login' );
 
 const {
     GraphQLObjectType,
@@ -56,7 +56,12 @@ const Mutation = new GraphQLObjectType( {
         login: {
             type: LoginType,
             args: { email: { type: new GraphQLNonNull( GraphQLString ) }, password: { type: new GraphQLNonNull( GraphQLString ) } },
-            resolve: loginResolver
+            resolve: login
+        },
+        loginUsingGoogle: {
+            type: LoginType,
+            args: { email: { type: new GraphQLNonNull( GraphQLString ) } },
+            resolve: loginUsingGoogle
         }
     }
 } );

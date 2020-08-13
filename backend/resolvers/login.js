@@ -2,7 +2,49 @@ const bcryptjs = require( 'bcryptjs' );
 const jwt = require( 'jsonwebtoken' );
 const User = require( '../models/User' );
 
-module.exports = async ( parent, args ) => {
+const loginUsingGoogle = async ( parent, args ) => {
+
+    try {
+        const { email } = args;
+
+        // see if user exists
+        let user = await User.findOne( { email } );
+
+        if( !user ) {
+            return {
+                token: null,
+                msg: 'User is not registered'
+            };
+        }
+
+        // return json web token
+        const payload = {
+            user: {
+                id: user.id
+            }
+        };
+
+        const token = await jwt.sign(
+            payload,
+            'mySecretToken',
+            { expiresIn: 360000 }
+        );
+
+        return {
+            token: token,
+            msg: 'Login success'
+        };
+        
+    } catch( err ) {
+        console.log( err.message );
+        return {
+            token: null,
+            msg: err.message
+        };
+    }               
+};
+
+const login = async ( parent, args ) => {
 
     try {
         const { email, password } = args;
@@ -52,4 +94,9 @@ module.exports = async ( parent, args ) => {
             msg: err.message
         };
     }               
-}
+};
+
+module.exports = {
+    login,
+    loginUsingGoogle
+};

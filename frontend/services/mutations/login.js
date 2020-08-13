@@ -7,3 +7,11 @@ export const loginMutation = gql`
         }
     }
 `;
+export const loginUsingGoogleMutation = gql`
+    mutation loginUsingGoogle( $email: String! ) {
+        loginUsingGoogle( email: $email ){
+            token
+            msg
+        }
+    }
+`;

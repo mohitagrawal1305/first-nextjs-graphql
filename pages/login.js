@@ -1,9 +1,11 @@
 import Head from 'next/head'
 import { useState, useEffect } from 'react';
 import { useMutation, useQuery } from '@apollo/client';
-import { loginMutation } from '../frontend/services/mutations/login';
+import { loginMutation, loginUsingGoogleMutation } from '../frontend/services/mutations/login';
 import { getUserQuery } from '../frontend/services/query/user';
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/router';
+import { GoogleLogin } from 'react-google-login';
+
 
 export default function Login() {
   const { client, loading, error, data } = useQuery( getUserQuery );
@@ -11,6 +13,7 @@ export default function Login() {
   const router = useRouter();
 
   const [ loginUser ] = useMutation( loginMutation );
+  const [ loginUsingGoogle ] = useMutation( loginUsingGoogleMutation );
 
   useEffect( () => {
     const token = localStorage.getItem('token');
@@ -23,6 +26,7 @@ export default function Login() {
     email: '',
     password: ''
   } );
+  const [ errorMessage, setErrorMessage ] = useState( '' );
   const {
     email,
     password
@@ -45,38 +49,74 @@ export default function Login() {
     if( token ) {
 
       localStorage.setItem( 'token', token );
+      localStorage.setItem( 'isUserLoggedIn', true );
   
       client.resetStore();
       router.push('/');
     }
 
   };
+
+  const googleSuccess = async ( payload ) => {
+      const { data } = await loginUsingGoogle( {
+        variables: {
+          email: payload.profileObj.email
+        }
+      } );
+      const { token, msg } = data.loginUsingGoogle;
+
+      if( token ) {
+
+        localStorage.setItem( 'token', token );
+        localStorage.setItem( 'isUserLoggedIn', true );
+    
+        client.resetStore();
+        router.push('/');
+      } else {
+        setErrorMessage( msg );
+      }
+
+  };
   return (
     <div>
       <Head>
         <title>Login</title>
-        <link rel="icon" href="/favicon.ico" />
       </Head>
-      <form onSubmit = { onSubmit } >
-      <label>Email</label>
-        <input
-          name = 'email'
-          value = { email }
-          type = 'email'
-          onChange = { onChange }
-          required = { true }
-        />
-      <label>Password</label>
+      
+      <form className = 'login-form' onSubmit = { onSubmit } >
+          { errorMessage }
+          <div className = 'login-form__google' >
+          <GoogleLogin
+            clientId="364793091796-4gmbmpe03219871cd8kts3gpdpmiqpih.apps.googleusercontent.com"
+            buttonText="Login"
+            onSuccess={googleSuccess}
+            onFailure={googleFailure}
+            cookiePolicy={'single_host_origin'}
+          />
+          </div>
+          <input
+            name = 'email'
+            value = { email }
+            type = 'email'
+            onChange = { onChange }
+            required = { true }
+            placeholder = 'Enter Email'
+          />
         <input
           name = 'password'
           type = 'password'
           value = { password }
           onChange = { onChange }
           required = { true }
+          placeholder = 'Enter Password'
         />
         <button type='submit' >Submit</button>
       </form>
-      
     </div>
   )
 }
+
+
+const googleFailure = ( payload ) => {
+  console.log( 'Failure', payload );
+};
