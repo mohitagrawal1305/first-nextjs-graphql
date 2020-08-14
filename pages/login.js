@@ -6,7 +6,6 @@ import { getUserQuery } from '../frontend/services/query/user';
 import { useRouter } from 'next/router';
 import { GoogleLogin } from 'react-google-login';
 
-
 export default function Login() {
   const { client, loading, error, data } = useQuery( getUserQuery );
 
@@ -84,7 +83,7 @@ export default function Login() {
       </Head>
       
       <form className = 'login-form' onSubmit = { onSubmit } >
-          { errorMessage }
+          
           <div className = 'login-form__google' >
           <GoogleLogin
             clientId="364793091796-4gmbmpe03219871cd8kts3gpdpmiqpih.apps.googleusercontent.com"
@@ -110,6 +109,7 @@ export default function Login() {
           required = { true }
           placeholder = 'Enter Password'
         />
+        { errorMessage }
         <button type='submit' >Submit</button>
       </form>
     </div>
