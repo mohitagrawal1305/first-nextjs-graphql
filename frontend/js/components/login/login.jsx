@@ -1,20 +1,23 @@
 import { useState, useEffect } from 'react';
-import { useMutation, useQuery } from '@apollo/client';
-import { loginMutation, loginUsingGoogleMutation } from 'mutations/login';//'../frontend/services/mutations/login';
-import { getUserQuery } from 'query/user';
+import { useMutation } from '@apollo/client';
+import { loginMutation, loginUsingGoogleMutation } from 'mutations/login';
 import { useRouter } from 'next/router';
 import { inputField as InputField } from 'modules/input-field'
 import { button as Button } from 'modules/button'
-import { error as Error } from 'modules/error';
-import { googleLogin as GoogleLogin } from 'modules/google-login'
+import { googleLogin as GoogleLogin } from 'modules/google-login';
+import { CircularProgress } from '@material-ui/core';
+import { Alert } from '@material-ui/lab';
+import { useApolloClient } from '@apollo/client';
+import { isEmpty } from 'lodash';
+import { textLink as TextLink } from 'modules/text-link';
 
-export const login = props => {
+export const login = () => {
 
-    const { client, loading, error, data } = useQuery( getUserQuery );
+    const  client = useApolloClient();
 
     const router = useRouter();
 
-    const [ loginUser ] = useMutation( loginMutation );
+    const [ loginUser, { loading: isSubmittingloginFromData } ] = useMutation( loginMutation );
     const [ loginUsingGoogle ] = useMutation( loginUsingGoogleMutation );
 
     useEffect( () => {
@@ -39,23 +42,30 @@ export const login = props => {
         ...formData,
         [ e.target.name ]: e.target.value
         } );
+
+        setErrorMessage( '' );
     };
 
     const onSubmit = async ( e ) => {
-        e.preventDefault();
-        const { data } = await loginUser( {
+        
+      e.preventDefault();
+        
+      const { data } = await loginUser( {
         variables: formData
-        } );
-        const token = data.login.token;
+      } );
+      
+      const { token, msg } = data.login;
 
-        if( token ) {
+      if( token ) {
 
         localStorage.setItem( 'token', token );
         localStorage.setItem( 'isUserLoggedIn', true );
     
         client.resetStore();
         router.push('/');
-        }
+        } else {
+          setErrorMessage( msg );
+      }
 
     };
 
@@ -79,11 +89,20 @@ export const login = props => {
         }
 
     };
+
+
     return (
       <div className = 'login' >
 
         <form className = 'login-form' onSubmit = { onSubmit } >
-          
+          {
+            !isEmpty( errorMessage ) && (
+              <Alert severity="error">
+                { errorMessage }
+              </Alert>
+            )
+          }
+
           <GoogleLogin
             clientId = "364793091796-4gmbmpe03219871cd8kts3gpdpmiqpih.apps.googleusercontent.com"
             label = "Continue with Google"
@@ -91,6 +110,7 @@ export const login = props => {
             onFailure = { googleFailure }
             cookiePolicy = { 'single_host_origin' }
           />
+          
           <InputField
             name = 'email'
             value = { email }
@@ -107,14 +127,23 @@ export const login = props => {
             required = { true }
             placeholder = 'Enter Password'
           />
-          <Error
-            msg = { errorMessage }
-          />
+
+          <TextLink href = '/forgot-password' label="Forgot Password?" />
           
           <Button type='submit' >
-            Submit
+            {
+              isSubmittingloginFromData ? (
+                <CircularProgress size = { 25 } />
+              ) : `Submit`
+            }
           </Button>
+
+          <div className='login__registration' >
+              <p className='login__registration__title' >Don't have an Account?</p>
+              <TextLink href = '/registration' label="Register Now" />
+          </div>
         </form>
+
       </div>
     )
 }
