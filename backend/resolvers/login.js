@@ -13,7 +13,7 @@ const loginUsingGoogle = async ( parent, args ) => {
         if( !user ) {
             return {
                 token: null,
-                msg: 'User is not registered'
+                msg: 'Please register.'
             };
         }
 

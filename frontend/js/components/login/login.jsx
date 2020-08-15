@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { loginMutation, loginUsingGoogleMutation } from 'mutations/login';
 import { useRouter } from 'next/router';
@@ -10,6 +10,7 @@ import { Alert } from '@material-ui/lab';
 import { useApolloClient } from '@apollo/client';
 import { isEmpty } from 'lodash';
 import { textLink as TextLink } from 'modules/text-link';
+import { checkIfLoggedIn } from 'hooks/checkIfLoggedIn';
 
 export const login = () => {
 
@@ -17,15 +18,10 @@ export const login = () => {
 
     const router = useRouter();
 
-    const [ loginUser, { loading: isSubmittingloginFromData } ] = useMutation( loginMutation );
-    const [ loginUsingGoogle ] = useMutation( loginUsingGoogleMutation );
+    checkIfLoggedIn( { isPrivateRoute: false } );
 
-    useEffect( () => {
-        const token = localStorage.getItem('token');
-        if( token ) {
-        router.push('/');
-        }
-    }, [] );
+    const [ loginUser, { loading: isSubmittingloginFromData } ] = useMutation( loginMutation );
+    const [ loginUsingGoogle, { loading: isSubmittingloginUsingGoogle } ] = useMutation( loginUsingGoogleMutation );
 
     const [ formData, setFormData ] = useState( {
         email: '',
@@ -93,7 +89,6 @@ export const login = () => {
 
     return (
       <div className = 'login' >
-
         <form className = 'login-form' onSubmit = { onSubmit } >
           {
             !isEmpty( errorMessage ) && (
@@ -132,7 +127,7 @@ export const login = () => {
           
           <Button type='submit' >
             {
-              isSubmittingloginFromData ? (
+              isSubmittingloginFromData || isSubmittingloginUsingGoogle ? (
                 <CircularProgress size = { 25 } />
               ) : `Submit`
             }

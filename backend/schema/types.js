@@ -1,6 +1,4 @@
 const graphql = require( 'graphql' );
-const Author = require( '../models/Author' );
-const Book = require( '../models/Book' );
 const User = require( '../models/User' );
 
 const {
@@ -11,52 +9,7 @@ const {
     GraphQLList,
 } = graphql;
 
-const BookType = new GraphQLObjectType( {
-    name: 'Book',
-    fields: () => ({
-        id: {
-            type: GraphQLID
-        },
-        name: {
-            type: GraphQLString
-        },
-        genre: {
-            type: GraphQLString
-        },
-        author: {
-            type: AuthorType,
-            async resolve( parent, args ) {
-                const author = await Author.findById( parent.authorId );
-                return author;
-            }
-        }
-    })
-} );
 
-const AuthorType = new GraphQLObjectType( {
-    name: 'Author',
-    fields: () => ({
-        id: {
-            type: GraphQLID
-        },
-        name: {
-            type: GraphQLString
-        },
-        age: {
-            type: GraphQLInt
-        },
-        books: {
-            type: new GraphQLList( BookType ),
-            async resolve( parent, args ) {
-
-                const book = await Book.find( { authorId: parent.id } );
-
-                return book;
-
-            }
-        }
-    })
-} );
 
 const LoginType = new GraphQLObjectType( {
     name: 'Login',
@@ -89,4 +42,32 @@ const UserType = new GraphQLObjectType( {
     }
 } );
 
-module.exports = { AuthorType, BookType, LoginType, UserType };
+const OtpType = new GraphQLObjectType( {
+    name: 'OTP',
+    fields:{
+        status: {
+            type: GraphQLString
+        },
+        msg: {
+            type: GraphQLString
+        }
+    }
+} );
+
+const AddOrUpdateUserType = new GraphQLObjectType( {
+    name: 'AddOrUpdateUser',
+    fields:{
+        status: {
+            type: GraphQLString
+        },
+        msg: {
+            type: GraphQLString
+        },
+        token: {
+            type: GraphQLString
+        },
+    }
+} );
+
+
+module.exports = { LoginType, UserType, OtpType, AddOrUpdateUserType };

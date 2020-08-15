@@ -1,4 +1,6 @@
-export const inputField = ( { name, value, type, onChange, required, placeholder } ) => {
+import classNames from 'classnames';
+
+export const inputField = ( { name, value, type, onChange, required, placeholder, className } ) => {
 
     const properties = {
         ...( name ? { name } : {} ),
@@ -8,10 +10,11 @@ export const inputField = ( { name, value, type, onChange, required, placeholder
         ...( value ? { value } : {} ),
         ...( placeholder ? { placeholder } : {} ),
     };
+    const _className = classNames( 'input', className );
 
     return (
         <input
-            className = 'input'
+            className = { _className }
             { ...properties }
           />
     )

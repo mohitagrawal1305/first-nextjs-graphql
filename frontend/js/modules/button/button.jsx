@@ -1,9 +1,11 @@
 import { noop } from 'lodash';
+import classNames from 'classnames';
 
-export const button = ( { type, onClick, label, children } ) => {
+export const button = ( { type, onClick, label, children, className } ) => {
 
+    const _className = classNames( 'button', className );
     return (
-        <button className = 'button' type= { type } onClick = { onClick }>
+        <button className = { _className } type= { type } onClick = { onClick }>
             {
                 children ? (
                     children
@@ -17,5 +19,6 @@ export const button = ( { type, onClick, label, children } ) => {
 button.defaultProps = {
     label: 'Submit',
     onClick: noop,
-    type: 'button'
+    type: 'button',
+    className: ''
 };

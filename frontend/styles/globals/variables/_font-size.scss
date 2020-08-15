@@ -1,6 +1,7 @@
 // base-font-size used in px to rem function
 $base-font-size: 10;
 $base-font-size-px: 0.69444444444vw; // 10 * 1px;
+$base-ipad-font-size-px: 1.666666667vw; // 10 * 1px;
 $base-mobile-font-size-px: 2.666666667vw; // 10 * 1px;
 
 $font-size-24: rem(24); // 24px;

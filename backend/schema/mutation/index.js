@@ -1,58 +1,19 @@
 const graphql = require( 'graphql' );
-const Book = require( '../../models/Book' );
-const Author = require( '../../models/Author' );
-const { AuthorType, BookType, LoginType } = require('../types');
+const { LoginType, OtpType, AddOrUpdateUserType } = require('../types');
 const { login, loginUsingGoogle } = require( '../../resolvers/login' );
+const { otpGenerator } = require( '../../resolvers/otp' );
+const { addOrUpdateUser } = require( '../../resolvers/addOrUpdateUser' );
 
 const {
     GraphQLObjectType,
     GraphQLString,
-    GraphQLID,
-    GraphQLInt,
     GraphQLNonNull,
+    GraphQLBoolean
 } = graphql;
 
 const Mutation = new GraphQLObjectType( {
     name: 'Mutation',
     fields: {
-        addAuthor: {
-            type: AuthorType,
-            args: {
-                name: { type: new GraphQLNonNull( GraphQLString ) },
-                age: { type: new GraphQLNonNull( GraphQLInt ) }
-            },
-            async resolve( parent, args ) {
-                const author = new Author( {
-                    name: args.name,
-                    age: args.age
-                } );
-
-                await author.save();
-
-                return author;
-
-            }
-        },
-        addBook: {
-            type: BookType,
-            args: {
-                name: { type: new GraphQLNonNull( GraphQLString ) },
-                genre: { type: new GraphQLNonNull( GraphQLString ) },
-                authorId: { type: new GraphQLNonNull( GraphQLID ) }
-            },
-            async resolve( parent, args ) {
-                const book = new Book( {
-                    name: args.name,
-                    genre: args.genre,
-                    authorId: args.authorId
-                } );
-
-                await book.save();
-
-                return book;
-
-            }
-        },
         login: {
             type: LoginType,
             args: { email: { type: new GraphQLNonNull( GraphQLString ) }, password: { type: new GraphQLNonNull( GraphQLString ) } },
@@ -62,6 +23,38 @@ const Mutation = new GraphQLObjectType( {
             type: LoginType,
             args: { email: { type: new GraphQLNonNull( GraphQLString ) } },
             resolve: loginUsingGoogle
+        },
+        generateOTP: {
+            type: OtpType,
+            args: { email: { type: new GraphQLNonNull( GraphQLString ) }, newUser: { type: new GraphQLNonNull( GraphQLBoolean ) } },
+            resolve: otpGenerator
+        },
+        register: {
+            type: AddOrUpdateUserType,
+            args: {
+                email: { type: new GraphQLNonNull( GraphQLString ) },
+                password: { type: new GraphQLNonNull( GraphQLString ) },
+                confirmPassword: { type: new GraphQLNonNull( GraphQLString ) },
+                otp: { type: new GraphQLNonNull( GraphQLString ) },
+                name: { type: new GraphQLNonNull( GraphQLString ) },
+            },
+            async resolve( parent, args ) {
+                const response = await addOrUpdateUser( { parent, args, newUser: true } );
+                return response;
+            }
+        },
+        resetPassword: {
+            type: AddOrUpdateUserType,
+            args: {
+                email: { type: new GraphQLNonNull( GraphQLString ) },
+                password: { type: new GraphQLNonNull( GraphQLString ) },
+                confirmPassword: { type: new GraphQLNonNull( GraphQLString ) },
+                otp: { type: new GraphQLNonNull( GraphQLString ) },
+            },
+            async resolve( parent, args ) {
+                const response = await addOrUpdateUser( { parent, args, newUser: false } );
+                return response;
+            }
         }
     }
 } );
