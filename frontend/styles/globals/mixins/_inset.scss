@@ -1,0 +1,29 @@
+/*
+    This mixin sets top and bottom padding or margin value if
+    a device supports notch or inaccessible area.
+
+    // Example: Add top padding to a container to avoid content rendering inside notch area.
+    @include with-platform( $platform-app ) {
+        .container-pane {
+            @include inset-top( 'padding-top' );
+        }
+    }
+*/
+
+// includes a `$property` with inset top value
+@mixin inset-top( $property, $initValue: 0px ) {
+    /* iOS Safari 11.2, Safari 11 */
+    #{$property}: calc( const( safe-area-inset-top ) + #{ $initValue } ) !important;
+
+    /* iOS Safari 11.4+, Safari 11.1+, Chrome 69+, Opera 56+ */
+    #{$property}: calc( env( safe-area-inset-top ) + #{ $initValue } ) !important;
+}
+
+// includes a `$property` with inset bottom value
+@mixin inset-bottom( $property, $initValue: 0px ) {
+    /* iOS Safari 11.2, Safari 11 */
+    #{$property}: calc( const( safe-area-inset-bottom ) + #{ $initValue } ) !important;
+
+    /* iOS Safari 11.4+, Safari 11.1+, Chrome 69+, Opera 56+ */
+    #{$property}: calc( env( safe-area-inset-bottom ) + #{ $initValue } ) !important;
+}

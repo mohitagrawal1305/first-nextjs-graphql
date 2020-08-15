@@ -1,0 +1,63 @@
+/**
+    This mixin conditionally adds CSS when the application is running inside a given platform.
+
+    // Example: apply style to an element when platform is mobile
+    @include with-platform( $platform-mobile ) {
+        // body style
+
+        .body-nested-child-selector {
+            // child style
+        }
+    }
+**/
+@mixin with-platform( $platform ) {
+
+    // platform : mobile (mobile phone / smart phone)
+    @if $platform == $platform-mobile {
+        body.#{ $platform-mobile } {
+            @content;
+        }
+    }
+
+    // platform: browser - all
+    @if $platform == $platform-browser {
+        body.#{ $platform-browser } {
+            @content;
+        }
+    }
+
+    // platform: browser - Android
+    @if $platform == $platform-android-browser {
+        body.#{ $platform-android-browser } {
+            @content;
+        }
+    }
+
+    // platform:  browser - iOS
+    @if $platform == $platform-ios-browser {
+        body.#{ $platform-ios-browser } {
+            @content;
+        }
+    }
+
+    // platform: app - all
+    @if $platform == $platform-app {
+        body.#{ $platform-app } {
+            @content;
+        }
+    }
+
+    // platform: app - Android
+    @if $platform == $platform-android-app {
+        body.#{ $platform-android-app } {
+            @content;
+        }
+    }
+
+    // platform:  app - iOS
+    @if $platform == $platform-ios-app {
+        body.#{ $platform-ios-app } {
+            @content;
+        }
+    }
+}

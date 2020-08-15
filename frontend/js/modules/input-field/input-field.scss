@@ -1,0 +1,10 @@
+@import '~scss-globals';
+
+.input {
+    height: rem(25);  
+    margin-bottom: rem(30);
+    padding: rem(10);
+    border: rem(1) solid $color-border;
+    border-radius: rem(4);
+    font-size: $font-size-14;
+  }

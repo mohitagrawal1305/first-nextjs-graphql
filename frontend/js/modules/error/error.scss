@@ -1,0 +1,7 @@
+@import '~scss-globals';
+
+.error {
+    font-size: $font-size-18;
+    color: $color-alert;
+    margin: rem(10);
+}

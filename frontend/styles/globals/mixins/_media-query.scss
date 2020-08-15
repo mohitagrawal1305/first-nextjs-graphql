@@ -1,0 +1,11 @@
+@mixin forMobile {
+    @media all and ( max-width: $tablet-width ) {
+        @content;
+    }
+}
+
+@mixin forIpad {
+    @media all and ( max-width: $ipad-width ) {
+        @content;
+    }
+}

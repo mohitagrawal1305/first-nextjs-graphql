@@ -1,0 +1,8 @@
+// return height in percentage of safe to render viewport-height
+@function vh( $percentage: 100 ) {
+
+    // --vh is CSS variable set by JavaScript (on HTML element) after application bootstrap has been completed
+    // 1vh is the fallback value if `--vh` environmental variable is not present
+    // (https://developer.mozilla.org/en-US/docs/Web/CSS/var)
+    @return calc(var(--vh, 1vh) * #{ $percentage });
+}

@@ -1,0 +1,24 @@
+// reset all styles
+@import "reset";
+html, body {
+    font-size: $base-font-size-px;
+    scroll-behavior: smooth;
+    color: $color-text-primary;
+    overflow-x: hidden;
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+    background-color: #15aabf0f;
+}
+
+// anchor <a> links
+a {
+    color: blue;
+    text-decoration: none;
+}
+
+// table layout
+table {
+    table-layout: fixed;
+    border-collapse: collapse;
+    width: 100%;
+}

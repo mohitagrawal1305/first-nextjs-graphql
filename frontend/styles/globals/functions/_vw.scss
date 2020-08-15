@@ -1,0 +1,8 @@
+// return width in percentage of safe to render viewport-width
+@function vw( $value ) {
+
+    // --vw is CSS variable set by JavaScript (on HTML element) after application bootstrap has been completed
+    // 1vw is the fallback value if `--vw` environmental variable is not present
+    // (https://developer.mozilla.org/en-US/docs/Web/CSS/var)
+    @return 0.069444444444vw * $value;
+}

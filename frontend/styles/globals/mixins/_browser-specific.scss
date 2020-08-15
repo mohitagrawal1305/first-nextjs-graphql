@@ -1,0 +1,15 @@
+@mixin ie-only {
+    @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+        @content;
+    }
+
+    @supports (-ms-accelerator: true) {
+        @content;
+    }
+}
+
+@mixin ie-edge {
+    @supports (-ms-ime-align: auto) {
+        @content;
+    }
+}

@@ -1,0 +1,8 @@
+// add ellipsis based on width
+
+@mixin ellipsis($max-width: 100%) {
+    max-width: $max-width;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}

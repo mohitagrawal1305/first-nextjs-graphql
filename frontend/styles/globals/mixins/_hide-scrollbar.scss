@@ -1,0 +1,9 @@
+@mixin hide-scrollbar() {
+    &::-webkit-scrollbar,
+    &::-webkit-scrollbar{
+        display: none; /*  might be enought */
+        background: transparent;
+        visibility: hidden;
+        width: 0px;
+    }
+}

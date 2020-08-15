@@ -1,0 +1,18 @@
+@import '~scss-globals';
+
+.login {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  .login-form {
+    width: rem( 360 );
+    display: flex;
+    flex-direction: column;
+    .google-login {
+      margin-bottom: rem( 30 );
+    }
+  }
+}

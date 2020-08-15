@@ -1,0 +1,15 @@
+
+// add drop shadow based on intensity
+@mixin drop-shadow( $intensity: 'ultra-light' ) {
+    @if $intensity == 'ultra-light' {
+        box-shadow: 0 -3px 8px 0 rgba(0, 0, 0, 0.1);
+    } @else if $intensity == 'sidebar' {
+        box-shadow: 0 -3px 8px 0 rgba(0, 0, 0, 0.3);
+    } @else if $intensity == 'secondary-nav' {
+        box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.14);
+    } @else if $intensity == 'footer-nav' {
+        box-shadow: 0 -5px 10px 0 rgba(0, 0, 0, 0.28);
+    } @else {
+        box-shadow: 0 -4px 12px 0 rgba(0, 0, 0, 0.5);
+    }
+}

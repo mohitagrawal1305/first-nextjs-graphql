@@ -1,5 +1,4 @@
 import Head from 'next/head'
-import styles from '../frontend/styles/Home.module.css'
 import { useQuery } from '@apollo/client';
 import { getUserQuery } from '../frontend/services/query/user';
 import { get } from 'lodash';
@@ -18,13 +17,13 @@ export default function Home() {
     }
   }, [] );
   return (
-    <div className={styles.container}>
+    <div >
       <Head>
         <title>Welcome to e-Commerce</title>
       </Head>
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>
+      <main >
+        <h1 >
           Welcome <span
             dangerouslySetInnerHTML = { {
                 __html: name
