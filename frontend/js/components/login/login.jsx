@@ -82,7 +82,7 @@ export const login = () => {
     };
 
     const googleFailure = () => {
-      setErrorMessage( 'Google Login Failed, Please try again.' );
+      setErrorMessage( 'Login Failed, Please try again.' );
   };
 
     return (
