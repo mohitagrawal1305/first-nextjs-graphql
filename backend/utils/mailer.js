@@ -11,7 +11,7 @@ const mailer = async ( { to, subject, text } ) => {
   });
   
     const message = {
-      from: 'mohitagrawal.dev@gmail.com',
+      from: '"Mohit Agrawal 👻" <mohitagrawal.dev@gmail.com>',
       to: to,
       subject: subject,
       text: text

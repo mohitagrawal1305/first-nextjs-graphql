@@ -96,13 +96,13 @@ const addOrUpdateUser = async ( { parent, args, newUser } ) => {
         );
 
         if( newUser ) {
-            mailer( {
+            await mailer( {
                 to: email,
                 subject: 'Welcome to e-Commerce',
                 text: `Hello ${ name }, Welcome to e-Commerce`
             } );
         } else {
-            mailer( {
+            await mailer( {
                 to: email,
                 subject: 'Password re-set successfully',
                 text: `Hello ${ user.name }, your password has been reset successfully`

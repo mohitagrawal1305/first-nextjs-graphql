@@ -24,7 +24,7 @@ const getSteps = ( { goBack = noop } = {} ) => {
 }, {
   fields: [ {
     name: 'otp',
-    type: 'number',
+    type: 'text',
     required: true,
     placeholder: 'Enter OTP',
   } ],
