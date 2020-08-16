@@ -85,13 +85,6 @@ export const login = () => {
     return (
       <div className = 'login' >
         <form className = 'login-form' onSubmit = { onSubmit } >
-          {
-            !isEmpty( errorMessage ) && (
-              <Alert severity="error">
-                { errorMessage }
-              </Alert>
-            )
-          }
 
           <GoogleLogin
             clientId = "364793091796-4gmbmpe03219871cd8kts3gpdpmiqpih.apps.googleusercontent.com"
@@ -119,6 +112,14 @@ export const login = () => {
           />
 
           <TextLink href = '/forgot-password' label="Forgot Password?" />
+
+          {
+            !isEmpty( errorMessage ) && (
+              <Alert severity="error">
+                { errorMessage }
+              </Alert>
+            )
+          }
           
           <Button type='submit' >
             {

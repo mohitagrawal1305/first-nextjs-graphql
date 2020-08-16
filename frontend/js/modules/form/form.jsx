@@ -69,13 +69,14 @@ const renderButtons = ( { actions, loading } ) => {
                     const isLastItem = actions.length - 1 === index;
                     if( loading && isLastItem ) {
                         return (
-                            <Button className = 'form__action__item' >
+                            <Button key = { index } className = 'form__action__item' >
                                 <CircularProgress size = { 25 } />
                             </Button>
                         );
                     }
                     return (
                         <Button
+                            key = { index }
                             className = 'form__action__item'
                             { ...action }
                             inverted = { !isLastItem }
