@@ -81,6 +81,9 @@ export const login = () => {
 
     };
 
+    const googleFailure = () => {
+      setErrorMessage( 'Google Login Failed, Please try again.' );
+  };
 
     return (
       <div className = 'login' >
@@ -138,10 +141,4 @@ export const login = () => {
       </div>
     )
 }
-
-const googleFailure = ( payload ) => {
-    console.log( 'Failure', payload );
-  };
-
-
 
