@@ -1,11 +1,11 @@
 // import globals
-@import './globals';
+@import './globals/index.scss';
 
 /**********************************/
 
 // import base css
-@import './base';
+@import './base/index.scss';
 
 
 // import fonts
-@import './fonts/';
+@import './fonts/index.scss';
