@@ -17,11 +17,17 @@ html, body {
     }
 }
 
+
+
 body {
-    padding: 0 rem(30) rem(30) rem(30);
+    padding: rem(30);
     background-color: #15aabf0f;
-    margin-top: $height-header;
-    min-height: calc( 100vh - #{ $height-header } );
+    
+    min-height: calc( 100vh );
+}
+
+.page-with-header {
+    margin-top: calc( #{ $height-header } - #{ rem(30) } );
 }
 
 // anchor <a> links
