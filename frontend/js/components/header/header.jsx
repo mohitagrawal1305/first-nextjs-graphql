@@ -3,6 +3,7 @@ import { throttle } from 'lodash';
 import Link from 'next/link';
 import { useApolloClient } from '@apollo/client';
 import { button as Button } from 'modules/button'
+import { getToken } from 'utils/getToken';
 
 export const header = () => {
     const [ isSticky, setSticky ] = useState( false );
@@ -22,7 +23,8 @@ export const header = () => {
 
     useEffect(() => {
         
-        const token = localStorage.getItem('token');
+        const token = getToken();
+        
         
         if( token ) {
             setUserLoggedIn( true );
@@ -54,7 +56,7 @@ export const header = () => {
                 ) : (
                     <Button
                         onClick = { () => {
-                            localStorage.removeItem("token");
+                            document.cookie = "token=null"
                             client.resetStore();
                             setUserLoggedIn( false );
                         } }

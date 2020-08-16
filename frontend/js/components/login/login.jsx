@@ -10,15 +10,12 @@ import { Alert } from '@material-ui/lab';
 import { useApolloClient } from '@apollo/client';
 import { isEmpty } from 'lodash';
 import { textLink as TextLink } from 'modules/text-link';
-import { checkIfLoggedIn } from 'hooks/checkIfLoggedIn';
 
 export const login = () => {
 
     const  client = useApolloClient();
 
     const router = useRouter();
-
-    checkIfLoggedIn( { isPrivateRoute: false } );
 
     const [ loginUser, { loading: isSubmittingloginFromData } ] = useMutation( loginMutation );
     const [ loginUsingGoogle, { loading: isSubmittingloginUsingGoogle } ] = useMutation( loginUsingGoogleMutation );
@@ -54,8 +51,7 @@ export const login = () => {
 
       if( token ) {
 
-        localStorage.setItem( 'token', token );
-        localStorage.setItem( 'isUserLoggedIn', true );
+        document.cookie = `token=${token}`;
     
         client.resetStore();
         router.push('/');
@@ -75,9 +71,8 @@ export const login = () => {
 
         if( token ) {
 
-            localStorage.setItem( 'token', token );
-            localStorage.setItem( 'isUserLoggedIn', true );
-        
+            document.cookie = `token=${token}`;
+            
             client.resetStore();
             router.push('/');
         } else {
