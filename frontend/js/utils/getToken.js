@@ -1,11 +1,9 @@
-import { head } from 'lodash';
+import cookies from 'next-cookies';
 
 export const getToken = () => {
-    const decodedCookie = decodeURIComponent(document.cookie);
-    const cookies = decodedCookie.split(';');
-    const tokenString = head( cookies.filter( item => item.match( 'token' ) ) );
-    if( tokenString ) {
-        const token = tokenString.replace( ' token=', '' );
+    
+    const { token } = cookies( { req: { cookies: document.cookie } } );
+    if( token ) {
 
         if( 'null' === token ) {
             return null;

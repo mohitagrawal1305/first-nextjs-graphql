@@ -1,8 +1,7 @@
 const { UserType } = require( '../types' );
-
 const graphql = require( 'graphql' );
 const User = require( '../../models/User' );
-const jwt = require( 'jsonwebtoken' );
+const getLoggedInUserId = require( '../../utils/getLoggedInUserId' );
 
 const {
     GraphQLObjectType,
@@ -14,13 +13,10 @@ const RootQuery = new GraphQLObjectType( {
         user: {
             type:UserType,
             async resolve( parent, args, request ) {
-                const { authorization } = request.headers;
                 
-                if( authorization ) {
-                    
-                    const { user } = jwt.verify( authorization, 'mySecretToken' );
-
-                    const _user = await User.findById( user.id );
+                const userId = getLoggedInUserId( request );
+                if( userId ) {
+                    const _user = await User.findById( userId );
                     
                     return _user;
                 }
