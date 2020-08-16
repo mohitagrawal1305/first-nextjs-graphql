@@ -1,6 +1,41 @@
 @import '~scss-globals';
 
 .form {
-   
     font-size: $font-size-16;
+    display: flex;
+    flex-direction: column;
+    background-color: $color-white;
+    padding: rem(20);
+    width: 100%;
+
+    .input {
+      margin-bottom: rem(20);
+    }
+
+    &__title {
+      margin-bottom: rem(20);
+      font-size: $font-size-20;
+      font-weight: bold;
+    }
+    &__subtitle {
+      margin-bottom: rem(20);
+      font-size: $font-size-16;
+      line-height: normal;
+    }
+
+    .MuiAlert-root {
+      margin-bottom: rem(20);
+    }
+    .MuiAlert-message {
+      font-size: $font-size-16;
+    }
+
+    &__actions {
+      display: flex;
+    }
+    &__action__item {
+      & + & {
+        margin-left: rem(20);
+      }
+    }
   }

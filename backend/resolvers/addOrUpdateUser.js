@@ -3,6 +3,7 @@ const bcryptjs = require( 'bcryptjs' );
 const jwt = require( 'jsonwebtoken' );
 const User = require( '../models/User' );
 const OTPModel = require( '../models/Otp' );
+const mailer = require( '../utils/mailer' );
 
 const addOrUpdateUser = async ( { parent, args, newUser } ) => {
 
@@ -93,6 +94,20 @@ const addOrUpdateUser = async ( { parent, args, newUser } ) => {
             'mySecretToken',
             { expiresIn: 360000 }
         );
+
+        if( newUser ) {
+            mailer( {
+                to: email,
+                subject: 'Welcome to e-Commerce',
+                text: `Hello ${ name }, Welcome to e-Commerce`
+            } );
+        } else {
+            mailer( {
+                to: email,
+                subject: 'Password re-set successfully',
+                text: `Hello ${ user.name }, your password has been reset successfully`
+            } );
+        }
 
         return {
             status: 'success',

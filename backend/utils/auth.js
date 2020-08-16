@@ -5,8 +5,6 @@ import Router from "next/router";
 export const auth = ( { ctx, isPrivateRoute } ) => {
     const { token } = nextCookie(ctx);
 
-    console.log(  token );
-
     if( ctx.req && isPrivateRoute && ( isEmpty( token ) || 'null' === token ) ) {
         ctx.res.writeHead(302, { Location: "/login" });
         ctx.res.end();

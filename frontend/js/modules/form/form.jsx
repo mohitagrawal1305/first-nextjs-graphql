@@ -3,10 +3,14 @@ import { useState } from 'react';
 import { button as Button } from 'modules/button'
 import { CircularProgress } from '@material-ui/core';
 import { inputField as InputField } from 'modules/input-field'
+import { Alert } from '@material-ui/lab';
 
-export const form = ( { fields, onSubmit, actions, isLoading } ) => {
+export const form = ( { fields, onSubmit, actions, loading, title, subtitle, selectedValues, status, msg } ) => {
 
-    const [ formData, setFormData ] = useState( {} );
+    let initialFormData = {};
+    isEmpty( selectedValues ) ? fields.map( field => initialFormData[ field.name ] = '' ) : initialFormData = selectedValues;
+
+    const [ formData, setFormData ] = useState( initialFormData );
 
     const _onSubmit = ( event ) => {
         event.preventDefault();
@@ -22,8 +26,26 @@ export const form = ( { fields, onSubmit, actions, isLoading } ) => {
 
     return (
         <form className = 'form'  onSubmit = { _onSubmit }>
+            {
+                title && (
+                    <h1 className = 'form__title' > { title } </h1>
+                )
+            }
+            {
+                subtitle && (
+                    <h2 className = 'form__subtitle' > { subtitle } </h2>
+                )
+            }
+
             { renderFields( { onChange, fields, formData } ) }
-            { renderButtons( { actions: castArray( actions ), isLoading } ) }
+            {
+                !isEmpty( status ) && !isEmpty( msg ) && (
+                    <Alert severity= { status }>
+                        { msg }
+                    </Alert>
+                )
+            }
+            { renderButtons( { actions: castArray( actions ), loading } ) }
         </form>
     )
 }
@@ -31,16 +53,21 @@ form.defaultProps = {
     fields: [],
     actions: [],
     onSubmit: noop,
-    isLoading: false
+    loading: false,
+    title: '',
+    subtitle: '',
+    selectedValues: {},
+    status: '',
+    msg: ''
 };
 
-const renderButtons = ( { actions } ) => {
+const renderButtons = ( { actions, loading } ) => {
     return !isEmpty( actions ) && (
         <div className = 'form__actions' >
             {
                 actions.map( ( action, index ) => {
                     const isLastItem = actions.length - 1 === index;
-                    if( isLoading && isLastItem ) {
+                    if( loading && isLastItem ) {
                         return (
                             <Button className = 'form__action__item' >
                                 <CircularProgress size = { 25 } />
@@ -51,6 +78,7 @@ const renderButtons = ( { actions } ) => {
                         <Button
                             className = 'form__action__item'
                             { ...action }
+                            inverted = { !isLastItem }
                             type = { isLastItem ? 'submit' : 'button' }
                         />
                     );
@@ -68,6 +96,7 @@ const renderFields = ( { onChange, fields, formData } ) => {
             default: {
                 return (
                     <InputField
+                        key = { field.name }
                         { ...field }
                         onChange = { onChange }
                         value = { formData[ field.name ] }

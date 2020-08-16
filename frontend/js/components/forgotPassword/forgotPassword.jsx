@@ -3,40 +3,24 @@ import { useState } from 'react';
 import { noop } from 'lodash';
 import { form as Form } from 'modules/form';
 import { generateOTPMutation } from 'mutations/generateOTP';
-import { registerMutation } from 'mutations/register';
+import { resetPasswordMutation } from 'mutations/resetPassword';
 import { useMutation } from '@apollo/client';
 import { useApolloClient } from '@apollo/client';
-
 
 const getSteps = ( { goBack = noop } = {} ) => {
   return [ {
   fields: [ {
-    name: 'name',
-    type: 'text',
-    required: true,
-    placeholder: 'Enter Name',
-  }, {
     name: 'email',
     type: 'email',
     required: true,
     placeholder: 'Enter Email',
-  }, {
-    name: 'password',
-    type: 'password',
-    required: true,
-    placeholder: 'Enter Password',
-  }, {
-    name: 'confirmPassword',
-    type: 'password',
-    required: true,
-    placeholder: 'Confirm Password',
   } ],
   actions: [ {
     type: 'submit',
     label: 'Send OTP'
   } ],
-  title: 'Register',
-  subtitle: 'Enter the email address that you want to associate with your account'
+  title: 'Forgot Password?',
+  subtitle: 'Enter the email address associated with your account'
 }, {
   fields: [ {
     name: 'otp',
@@ -52,13 +36,35 @@ const getSteps = ( { goBack = noop } = {} ) => {
     type: 'submit',
     label: 'Submit'
   } ],
-  title: 'Register',
+  title: 'Forgot Password?',
   subtitle: 'Please enter the OTP sent on your email address associated with your account'
+}, {
+  fields: [ {
+    name: 'password',
+    type: 'password',
+    required: true,
+    placeholder: 'Enter Password',
+  }, {
+    name: 'confirmPassword',
+    type: 'password',
+    required: true,
+    placeholder: 'Confirm Password',
+  } ],
+  actions: [ {
+    type: 'button',
+    label: 'Previous',
+    onClick: goBack
+  }, {
+    type: 'submit',
+    label: 'Submit'
+  } ],
+  title: 'Forgot Password?',
+  subtitle: 'Add new Password'
 } ];
 };
 
 
-export const registration = () => {
+export const forgotPassword = () => {
 
     const [ serverResponse, setServerResponse ] = useState( { status: '', msg: '' } );
 
@@ -66,7 +72,7 @@ export const registration = () => {
     const [ selectedValues, setSelectedValues ] = useState( {} );
 
     const [ generateOTP, { loading } ] = useMutation( generateOTPMutation );
-    const [ registerUser, { loading: registeringUser } ] = useMutation( registerMutation );
+    const [ resetPassword, { loading: registeringUser } ] = useMutation( resetPasswordMutation );
 
     const client = useApolloClient();
 
@@ -76,20 +82,26 @@ export const registration = () => {
     const onSubmit = ( payload ) => {
 
       if( 0 === activeStepIndex ) {
-
-        if( payload.password !== payload.confirmPassword ) {
-          setServerResponse( { status: 'error', msg: 'Password\'s does not match' } );
-        } else {
           setServerResponse( { status: '', msg: '' } );
           setSelectedValues( {
             ...selectedValues,
             ...payload
           } );
           handleGenerateOTP( payload );
-        }
+      } else if( 1 === activeStepIndex ) {
+        setServerResponse( { status: '', msg: '' } );
+        setSelectedValues( {
+          ...selectedValues,
+          ...payload
+        } );
+        setActiveStepIndex( activeStepIndex + 1 );
       } else {
         setServerResponse( { status: '', msg: '' } );
-        handleRegistrationSubmit( payload );
+        if( payload.password !== payload.confirmPassword ) {
+          setServerResponse( { status: 'error', msg: 'Password\'s does not match' } );
+        } else {
+          handleResetPasswordSubmit( payload );
+        }
       }
       
     };
@@ -99,7 +111,7 @@ export const registration = () => {
       const { data } = await generateOTP( {
         variables: {
           email: payload.email,
-          newUser: true
+          newUser: false
         }
       } );
 
@@ -116,16 +128,16 @@ export const registration = () => {
       }
     };
 
-    const handleRegistrationSubmit = async ( payload ) => {
+    const handleResetPasswordSubmit = async ( payload ) => {
       
-      const { data } = await registerUser( {
+      const { data } = await resetPassword( {
         variables: {
           ...selectedValues,
-          otp: payload.otp
+          ...payload
         }
       } );
 
-      const { msg, status, token } = data.register;
+      const { msg, status, token } = data.resetPassword;
 
       if( 'success' === status && token ) {
 
@@ -145,12 +157,13 @@ export const registration = () => {
 
     const goBack = () => {
       setActiveStepIndex( activeStepIndex - 1 );
+      setServerResponse( { status: '', msg: '' } );
     };
 
     const stepPayload = getSteps( { goBack } )[ activeStepIndex ];
 
     return (
-      <div className = 'registration' >
+      <div className = 'forgot-password' >
           <Form
             key = { activeStepIndex }
             { ...stepPayload }

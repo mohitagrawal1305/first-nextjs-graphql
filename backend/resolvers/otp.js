@@ -23,6 +23,9 @@ const otpGenerator = async ( parent, args ) => {
         }
 
         const token = Math.floor(100000 + Math.random() * 900000);
+        let userWithOTP = await OtpModel.findOne( { email } );
+        
+        userWithOTP && await userWithOTP.remove();
 
         const otpObj = new OtpModel( {
             email,
@@ -41,7 +44,7 @@ const otpGenerator = async ( parent, args ) => {
         if( mailStatus ) {
             return {
                 status: 'success',
-                msg: 'Login success'
+                msg: 'OTP sent successfully'
             };
         } else {
             return {
@@ -53,8 +56,8 @@ const otpGenerator = async ( parent, args ) => {
     } catch( err ) {
         console.log( err.message );
         return {
-            token: null,
-            msg: 'OTP sent successfully'
+            status: 'error',
+            msg: 'Something went wrong'
         };
     }               
 };

@@ -7,4 +7,10 @@
     color: $color-white;
     border-radius: rem(4);
     font-size: $font-size-16;
+
+    &--inverted {
+      color: $color-primary;
+      background-color: $color-white;
+      border: rem(1) solid $color-primary;
+    }
   }

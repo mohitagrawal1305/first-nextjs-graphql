@@ -2,7 +2,6 @@ import Head from 'next/head';
 import { login as LoginContainer } from '../frontend/js/components/login';
 import { Fragment } from 'react';
 import { auth } from '../backend/utils/auth';
-
 function Login() {
 
   return (
