@@ -1,5 +1,7 @@
 const graphql = require( 'graphql' );
-const { LoginType, OtpType, AddOrUpdateUserType } = require('../types');
+const { AddOrUpdateUserType } = require('../types/user');
+const { LoginType } = require( '../types/login' );
+const { OtpType } = require( '../types/otp' );
 const { login, loginUsingGoogle } = require( '../../resolvers/login' );
 const { otpGenerator } = require( '../../resolvers/otp' );
 const { addOrUpdateUser } = require( '../../resolvers/addOrUpdateUser' );
@@ -55,7 +57,10 @@ const Mutation = new GraphQLObjectType( {
                 const response = await addOrUpdateUser( { parent, args, newUser: false } );
                 return response;
             }
-        }
+        },
+        // addProduct: {
+
+        // }
     }
 } );
 

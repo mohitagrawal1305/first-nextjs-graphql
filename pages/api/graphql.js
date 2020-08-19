@@ -4,13 +4,9 @@ import database from '../../backend/databaseConnection';
 
 const { graphqlHTTP } = require('express-graphql');
 
-const schema = require( '../../backend/schema/schema' );
+const schema = require( '../../backend/schema/index' );
 
 database();
-
-// {
-//   "Authentication": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWYwYjAxZWNiNjUxZWM2MjRlMjY3NTMzIn0sImlhdCI6MTU5Njk5MTAyMywiZXhwIjoxNTk3MzUxMDIzfQ.RM7D7HFY56T9W3WxOIJdvkRA7SkgzKbQ9yyVKDHDVgM"
-// }
 
 export default graphqlHTTP( {
   schema,

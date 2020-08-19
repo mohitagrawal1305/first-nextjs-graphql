@@ -1,7 +1,7 @@
-const { UserType } = require( '../types' );
 const graphql = require( 'graphql' );
-const User = require( '../../models/User' );
-const getLoggedInUserId = require( '../../utils/getLoggedInUserId' );
+
+const userQuery = require( './user' );
+const productsQuery = require( './products' );
 
 const {
     GraphQLObjectType,
@@ -10,18 +10,8 @@ const {
 const RootQuery = new GraphQLObjectType( {
     name: 'RootQueryType',
     fields: {
-        user: {
-            type:UserType,
-            async resolve( parent, args, request ) {
-                
-                const userId = getLoggedInUserId( request );
-                if( userId ) {
-                    const _user = await User.findById( userId );
-                    
-                    return _user;
-                }
-            }
-        }
+        user: userQuery,
+        products: productsQuery,
     }
 } );
 
