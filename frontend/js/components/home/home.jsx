@@ -13,9 +13,9 @@ export const home = props => {
     }
     return (
       <main className = 'home' >
-        <h1 >
-          Welcome
-        </h1>
+        <section className= 'home__main-section' >
+          <h1 className= 'home__main-section__title' >Work in Progress</h1>
+        </section>
         </main>
     )
 }

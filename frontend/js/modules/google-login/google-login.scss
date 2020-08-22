@@ -4,6 +4,7 @@
     button {
       width: 100%;
       font-size: $font-size-14 !important;
-
+      border-radius: rem(6) !important;
+      @extend %box-shadow;
     }
   }

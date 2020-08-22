@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useApolloClient } from '@apollo/client';
 import { button as Button } from 'modules/button'
 import { getToken } from 'utils/getToken';
+import { search as Search } from '../search';
 
 export const header = () => {
     const [ isSticky, setSticky ] = useState( false );
@@ -48,6 +49,9 @@ export const header = () => {
             </svg>
 
             <nav className='header__navigations' >
+            <span className='header__search not-desktop' >
+                <Search />
+            </span>
             {
                 !isUserLoggedIn ? (
                     <Link href="/login">

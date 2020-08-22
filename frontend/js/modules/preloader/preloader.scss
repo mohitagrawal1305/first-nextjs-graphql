@@ -14,8 +14,8 @@
     svg{
       opacity: 0;
       animation: flickerAnimation 5s infinite;
-      height: 350px;
-      enable-background:new 0 0 512 512;
+      height: rem( 350 );
+      width: rem(150);
     }
 
   }

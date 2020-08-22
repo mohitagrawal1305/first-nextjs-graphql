@@ -5,12 +5,13 @@
     width: 100%;
     background-color: $color-primary;
     color: $color-white;
-    border-radius: rem(4);
+    border-radius: rem(6);
     font-size: $font-size-16;
+    @extend %box-shadow;
 
     &--inverted {
       color: $color-primary;
       background-color: $color-white;
-      border: rem(1) solid $color-primary;
+      //border: rem(1) solid $color-primary;
     }
   }

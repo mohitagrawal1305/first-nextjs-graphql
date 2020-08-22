@@ -21,13 +21,31 @@ html, body {
 
 body {
     padding: rem(30);
-    background-color: #15aabf0f;
+    background-color: rgb(247, 247, 247);
+
+    @include forIpad {
+        padding: rem(20);
+      }
+  
+      @include forMobile {
+        padding: rem(20);
+      }
     
     min-height: calc( 100vh );
 }
 
 .page-with-header {
     margin-top: calc( #{ $height-header } - #{ rem(30) } );
+
+    @include forIpad {
+        margin-top: calc( #{ $height-header-mobile } - #{ rem(20) } );
+    }
+
+    @include forMobile {
+        margin-top: calc( #{ $height-header-mobile } - #{ rem(20) } );
+    }
+
+    
 }
 
 // anchor <a> links

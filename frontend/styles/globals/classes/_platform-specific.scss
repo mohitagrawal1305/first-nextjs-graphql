@@ -1,0 +1,5 @@
+.not-desktop {
+    @media all and ( min-width: $ipad-width ) {
+        display: none;
+    }
+}

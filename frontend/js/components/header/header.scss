@@ -11,8 +11,18 @@
     display: flex;
     align-items: center;
 
+    @include forIpad {
+      padding: rem(20);
+      height: $height-header-mobile;
+    }
+
+    @include forMobile {
+      padding: rem(20);
+      height: $height-header-mobile;
+    }
+
     &__logo {
-      height: rem(30);
+      height: rem(40);
     }
 
     &--sticky {
@@ -22,8 +32,14 @@
       display: flex;
       justify-content: flex-end;
       width: 100%;
+      align-items: center;
       .button {
-        width: rem( 100 );
+        width: rem( 80 );
       }
+    }
+
+    &__search {
+      width: 80%;
+      margin: 0 rem(10);
     }
   }
