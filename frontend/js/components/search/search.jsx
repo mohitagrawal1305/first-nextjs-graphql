@@ -13,8 +13,15 @@ export const search = () => {
     
     return (
         <form className = 'search' onSubmit = { onSubmit }>
-            <input name='search' tabIndex = {0} className = 'search__input' value = { value } onChange = { ( e ) => { setValue( e.target.value ) } } />
-            <button type='submit' ><SearchIcon fontSize='large'/> </button>
+            <input
+                name='search'
+                tabIndex = {0}
+                className = 'search__input'
+                value = { value }
+                onChange = { ( e ) => { setValue( e.target.value ) } }
+                placeholder = 'Search your product from here'
+            />
+            <button className = 'search__button' type='submit' ><SearchIcon fontSize='large'/></button>
         </form>   
     )
 }

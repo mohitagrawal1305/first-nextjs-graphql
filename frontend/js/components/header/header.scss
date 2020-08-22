@@ -1,10 +1,24 @@
 @import '~scss-globals';
 
+.headroom--unfixed {
+
+  margin: - #{ rem(30) };
+
+  @include forIpad {
+    margin: - #{ rem(20) };
+  }
+
+  @include forMobile {
+    margin: - #{ rem(20) };
+  }
+
+}
+.headroom--pinned {
+  background-color: $color-white;
+}
+
 .header {
-    position: fixed;
-    left: 0;
-    right: 0;
-    top: 0;
+    
     height: $height-header;
     font-size: $font-size-16;
     padding: rem(20) rem(30);
@@ -25,9 +39,6 @@
       height: rem(40);
     }
 
-    &--sticky {
-      background-color: $color-white;
-    }
     &__navigations {
       display: flex;
       justify-content: flex-end;
@@ -36,10 +47,5 @@
       .button {
         width: rem( 80 );
       }
-    }
-
-    &__search {
-      width: 80%;
-      margin: 0 rem(10);
     }
   }

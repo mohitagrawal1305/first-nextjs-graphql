@@ -1,0 +1,47 @@
+@import '~scss-globals';
+
+.cart {
+  position: fixed;
+  height: 4rem;
+  top: 50%;
+  right: 0;
+  height: rem(40);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  border-radius: rem(6) 0 0 rem(6);
+  color: $color-white;
+  padding: rem(10);
+  background-color: $color-primary;
+  cursor: pointer;
+  @extend %box-shadow;
+  &__count {
+    font-size: $font-size-12;
+  }
+
+  &--mobile {
+    cursor: pointer;
+    @extend %box-shadow;
+    position: fixed;
+    height: 4rem;
+    bottom: rem(30);
+    left: rem(20);
+    padding: rem(15) rem(30);
+    min-width: rem(130);
+    background-color: $color-primary;
+    border-radius: rem(60);
+    color: $color-white;
+    font-size: $font-size-14;
+    display: flex;
+    align-items: center;
+    &__count {
+      margin-left: rem(5);
+    }
+  }
+  
+  svg {
+    margin-right: rem(5);
+  }
+
+    
+  }

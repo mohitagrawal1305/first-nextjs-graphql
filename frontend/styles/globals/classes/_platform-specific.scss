@@ -1,5 +1,16 @@
 .not-desktop {
     @media all and ( min-width: $ipad-width ) {
-        display: none;
+        display: none !important;
+    }
+}
+.not-mobile {
+    @include forMobile {
+        display: none !important;
+    }
+}
+
+.not-ipad {
+    @media all and ( min-width: $tablet-width ) {
+        display: none !important;
     }
 }
