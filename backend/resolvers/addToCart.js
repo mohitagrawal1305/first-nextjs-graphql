@@ -34,7 +34,6 @@ const addToCart = async ( parent, args, request ) => {
             } );
         }
 
-        console.log( cart );
         cart.products.push( productId );
         await cart.save();
 
