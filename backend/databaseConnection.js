@@ -1,5 +1,5 @@
 const mongoose = require( 'mongoose' );
-const db = 'mongodb+srv://admin:admin@first-mern-app.vrxzz.mongodb.net/ecommerce?retryWrites=true&w=majority';
+const db = `mongodb+srv://${ process.env.DATABASE_PASSWORD }:${ process.env.DATABASE_PASSWORD }@first-mern-app.vrxzz.mongodb.net/${ process.env.DATABASE_NAME }?retryWrites=true&w=majority`;
 
 const connectDB = async () => {
     

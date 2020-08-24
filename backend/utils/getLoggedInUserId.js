@@ -6,7 +6,7 @@ const getLoggedInUserId = ( request ) => {
     if( 'null' === token ) {
         return null;
     }
-    const { user } = jwt.verify( token, 'mySecretToken' );
+    const { user } = jwt.verify( token, process.env.JWT_SECRET_KEY );
     if( user ) {
         return user.id;
     } else {
