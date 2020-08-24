@@ -43,5 +43,22 @@
     margin-right: rem(5);
   }
 
+  &__drawer {
+    &__directions {
+      &--bottom {
+        height: 60vh;
+        padding: rem(20);
+      }
+      &--right {
+        width: 40vw;
+        padding: rem(30);
+        @include forIpad {
+          width: 60vw;
+
+        }
+      }
+    }
+  }
+
     
   }

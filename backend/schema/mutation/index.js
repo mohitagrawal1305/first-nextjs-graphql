@@ -5,12 +5,15 @@ const { OtpType } = require( '../types/otp' );
 const { login, loginUsingGoogle } = require( '../../resolvers/login' );
 const { otpGenerator } = require( '../../resolvers/otp' );
 const { addOrUpdateUser } = require( '../../resolvers/addOrUpdateUser' );
+const { CartType } = require( '../types/cart' );
+const { addToCart } = require( '../../resolvers/addToCart' );
 
 const {
     GraphQLObjectType,
     GraphQLString,
     GraphQLNonNull,
-    GraphQLBoolean
+    GraphQLBoolean,
+    GraphQLID
 } = graphql;
 
 const Mutation = new GraphQLObjectType( {
@@ -58,9 +61,13 @@ const Mutation = new GraphQLObjectType( {
                 return response;
             }
         },
-        // addProduct: {
-
-        // }
+        addToCard: {
+            type: CartType,
+            args: {
+                productId: { type: new GraphQLNonNull( GraphQLID ) }
+            },
+            resolve: addToCart
+        }
     }
 } );
 

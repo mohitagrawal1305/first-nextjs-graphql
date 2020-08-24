@@ -2,6 +2,7 @@ const graphql = require( 'graphql' );
 
 const userQuery = require( './user' );
 const productsQuery = require( './products' );
+const cartQuery = require( './cart' );
 
 const {
     GraphQLObjectType,
@@ -12,6 +13,7 @@ const RootQuery = new GraphQLObjectType( {
     fields: {
         user: userQuery,
         products: productsQuery,
+        cart: cartQuery
     }
 } );
 

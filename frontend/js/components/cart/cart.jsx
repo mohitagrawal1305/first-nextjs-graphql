@@ -7,7 +7,7 @@ export const cart = () => {
     const [ isOpen, setOpen ] = useState( false );
     const [ direction, setDirection ] = useState( '' );
     
-    return (
+    return ( 
         <>
             <div className = 'cart not-mobile' onClick = { () => { setOpen( !isOpen ); setDirection( 'right' ); } } >
                 <LocalMallIcon fontSize='large'/>
@@ -20,7 +20,9 @@ export const cart = () => {
             </div>
 
             <Drawer anchor = { direction } open = { isOpen } onClose={ () => { setOpen( !isOpen ); } }>
-                Hello
+                <div className = { `cart__drawer cart__drawer__directions--${ direction }` } >
+                    Hello
+                </div>
             </Drawer>
         </>
     )
