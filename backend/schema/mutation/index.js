@@ -9,6 +9,7 @@ const { CartType } = require( '../types/cart' );
 const { ProductType } = require( '../types/product' );
 const { addToCart } = require( '../../resolvers/addToCart' );
 const { addProduct } = require( '../../resolvers/addProduct' );
+const { removeFromCard } = require( '../../resolvers/removeFromCard' );
 
 const {
     GraphQLObjectType,
@@ -70,6 +71,15 @@ const Mutation = new GraphQLObjectType( {
                 productId: { type: new GraphQLNonNull( GraphQLID ) }
             },
             resolve: addToCart
+        },
+        removeFromCard: {
+            type: CartType,
+            args: {
+                productId: { type: GraphQLID },
+                removeProduct: { type: GraphQLBoolean },
+                clearCart: { type: GraphQLBoolean }
+            },
+            resolve: removeFromCard
         },
         addProduct: {
             type: ProductType,
