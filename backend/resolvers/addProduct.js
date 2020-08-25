@@ -1,53 +1,45 @@
-const Cart = require( '../models/Product' );
-const getLoggedInUserId = require( '../utils/getLoggedInUserId' );
-const { cloneDeep } = require( 'lodash' );
-const addToCart = async ( parent, args, request ) => {
+const Product = require( '../models/Product' );
+
+const addProduct = async ( parent, args ) => {
 
     try {
-        const userId = getLoggedInUserId( request );
 
-        if( !userId ) {
-            return {
-                status: 'error',
-                msg: 'Please Login',
-            };
-        }
-
-        const { productId } = args;
-
-        if( !productId ) {
-            return {
-                status: 'error',
-                msg: 'Product is not available',
-            };
-        }
+        const { name, description, price, quantity, images } = args;
 
         // see if user exists
-        let cart = await Cart.findOne( { user: userId } );
+        let product = await Product.findOne( { name } );
 
-        if( !cart ) {
+
+        if( product ) {
             
-            // create new user instance
-            cart = new Cart( {
-                user: userId,
-                products: []
-            } );
+            return {
+                status: 'error',
+                msg: `${ name } already exists, try updating product`,
+                ...product
+            };
         }
+
+         if( !product ) {
+
+            const _images = images.split( ',' );
+
+             // create new product instance
+             product = new Product( {
+                 name,
+                 description,
+                 price,
+                 quantity,
+                 images: _images
+             } );
+         }
         
-        const products = cloneDeep( cart.products );
-        
-        products.push( productId );
 
-        cart.products = products;
-
-        console.log( cart );
-
-        await cart.save();
+        await product.save();
 
         return {
             status: 'success',
             msg: 'Product has been added to cart',
-            products: cart.products
+            ...product
         }
 
         
@@ -61,5 +53,5 @@ const addToCart = async ( parent, args, request ) => {
 };
 
 module.exports = {
-    addToCart
+    addProduct
 };

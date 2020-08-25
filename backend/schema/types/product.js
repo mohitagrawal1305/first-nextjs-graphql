@@ -4,6 +4,7 @@ const {
     GraphQLObjectType,
     GraphQLString,
     GraphQLList,
+    GraphQLInt
 } = graphql;
 
 
@@ -25,15 +26,6 @@ const commentType = new GraphQLObjectType( {
     }
 } );
 
-const imageUrlType = new GraphQLObjectType( {
-    name: 'imageUrlType',
-    fields:{
-        url: {
-            type: GraphQLString
-        }
-    }
-} );
-
 
 const ProductType = new GraphQLObjectType( {
     name: 'ProductType',
@@ -45,21 +37,27 @@ const ProductType = new GraphQLObjectType( {
             type: GraphQLString
         },
         price: {
-            type: GraphQLString
+            type: GraphQLInt
         },
         likes: {
             type: new GraphQLList( UserType )
         },
         quantity: {
-            type: GraphQLString
+            type: GraphQLInt
         },
         comments: {
             type: new GraphQLList( commentType )
         },
         images: {
-            type: new GraphQLList( imageUrlType )
+            type: new GraphQLList( GraphQLString )
         },
         date: {
+            type: GraphQLString
+        },
+        status: {
+            type: GraphQLString
+        },
+        msg: {
             type: GraphQLString
         }
     }

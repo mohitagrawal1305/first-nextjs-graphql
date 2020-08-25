@@ -1,6 +1,7 @@
 const graphql = require( 'graphql' );
 const { ProductType } = require( './product' );
 const Product = require( '../../models/Product' );
+const { get, isEmpty } = require( 'lodash' );
 
 const {
     GraphQLObjectType,
@@ -16,18 +17,6 @@ const CartType = new GraphQLObjectType( {
         id: {
             type: GraphQLID
         },
-        totalPrice: {
-            type: GraphQLString
-        },
-        quantity: {
-            type: GraphQLString
-        },
-        status: {
-            type: GraphQLString
-        },
-        msg: {
-            type: GraphQLString
-        },
         products: {
             type: new GraphQLList( ProductType ),
             async resolve( parent, args ) {
@@ -35,6 +24,10 @@ const CartType = new GraphQLObjectType( {
                 const products = [];
 
                 let i = 0;
+
+                if( isEmpty( get( parent, 'products', [] ) ) ) {
+                    return [];
+                }
 
                 while( i < parent.products.length ) {
                     const _productId = parent.products[ i ];

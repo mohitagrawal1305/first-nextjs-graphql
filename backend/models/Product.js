@@ -12,7 +12,7 @@ const ProductSchema = new Schema( {
         required: true
     },
     price: {
-        type: String,
+        type: Number,
         required: true,  
     },
     likes: [ {
@@ -23,7 +23,7 @@ const ProductSchema = new Schema( {
     } ],
     quantity: {
         type: Number,
-        unique: true
+        required: true
     },
     comments: [ {
         user: {
@@ -42,11 +42,9 @@ const ProductSchema = new Schema( {
             default: Date.now
         }
     } ],
-    images:[ {
-        url: {
-            type: String
-        }
-    } ],
+    images: {
+        type: [String]
+    },
     date: {
         type: Date,
         default: Date.now
