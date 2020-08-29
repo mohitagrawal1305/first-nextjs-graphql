@@ -7,12 +7,12 @@
   height: 100%;
   margin-top: 50px;
   &__item {
-    width: calc( 33% - #{ rem( 16 ) } );
-    height: rem(560);
+    width: calc( 25% - #{ rem( 23 ) } );
+    height: rem(510);
     margin-right: rem(30);
     margin-bottom: rem(30);
     border-radius: rem(6);
-    &:nth-child(3n) {
+    &:nth-child(4n) {
       margin-right: 0;
     }
     @extend %box-shadow;
@@ -21,7 +21,7 @@
 
     &__image {
       width: 100%;
-      height: rem(450);
+      height: rem(400);
       background-size: cover;
       &__preload {
         width: 100%;

@@ -3,8 +3,16 @@ import LocalMallIcon from '@material-ui/icons/LocalMall';
 import Drawer from '@material-ui/core/Drawer';
 import { cartQuery } from 'query/cart';
 import { useQuery } from '@apollo/client';
-import { get } from 'lodash';
+import { get, isEmpty, find, cloneDeep } from 'lodash';
 import { CircularProgress } from '@material-ui/core';
+
+const ProductItem = ( props ) => {
+    return (
+        <li>
+            <h1> { props.name } - { props.quantity } </h1>
+        </li>
+    );  
+};
 
 export const cart = () => {
 
@@ -13,8 +21,30 @@ export const cart = () => {
 
     const { loading, error, data } = useQuery( cartQuery );
 
-    const total = get( data, 'cart.products', [] ).length;
+    const _products = cloneDeep( get( data, 'cart.products', [] ) );
 
+    const total = _products.length;
+
+    let totalPrice = 0;
+
+    const products = [];
+
+    _products.map( product => {
+        
+        totalPrice = totalPrice + product.price;
+        
+        const existingProduct = find( products, { _id: product._id } );
+        
+        if( existingProduct ) {
+            existingProduct.quantity = existingProduct.quantity + 1;
+        } else {
+            products.push( {
+                ...product,
+                quantity: 1
+            } );
+        }
+
+    } );
     
     return ( 
         <>
@@ -47,7 +77,24 @@ export const cart = () => {
 
             <Drawer anchor = { direction } open = { isOpen } onClose={ () => { setOpen( !isOpen ); } }>
                 <div className = { `cart__drawer cart__drawer__directions--${ direction }` } >
-                    Hello
+                   {
+                       isEmpty( products ) ? (
+                           <div>
+                               Add products to cart
+                           </div>
+                       ) : (
+                           <ul>
+                               {
+                                    products.map( product => {
+                                        return (
+                                            <ProductItem key = { product._id } { ...product } />
+                                        );
+                                    } )
+                               }
+                               Total: Rs. { totalPrice }
+                           </ul>
+                       )
+                   }
                 </div>
             </Drawer>
         </>

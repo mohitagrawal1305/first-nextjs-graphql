@@ -1,14 +1,22 @@
 import { search as Search } from '../search';
 import { ProductsList } from '../ProductsList';
-export const home = props => {
+import { useState } from 'react';
 
+export const home = () => {
+
+    const [ value, setValue ] = useState( '' );
+
+    const onSubmit = ( _value ) => {
+      setValue( _value );
+    };
+    
     return (
       <main className = 'home' >
         <section className= 'home__main-section' >
           <h1 className= 'home__main-section__title' >Shop here</h1>
-          <Search />
+          <Search onSubmit = { onSubmit } />
         </section>
-        <ProductsList />
+        <ProductsList query = { value } />
         </main>
     )
 }

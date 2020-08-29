@@ -1,11 +1,6 @@
 const { CartType } = require( '../types/cart' );
 const Cart = require( '../../models/Cart' );
-const graphql = require( 'graphql' );
 const getLoggedInUserId = require( '../../utils/getLoggedInUserId' );
-
-const {
-    GraphQLList,
-} = graphql;
 
 module.exports = {
     type: CartType,

@@ -54,11 +54,14 @@ const ProductItem = ( props ) => {
     );
 };
 
-export const ProductsList = () => {
 
-    const { loading, error, data } = useQuery( getAllProductsQuery );
+export const ProductsList = ( props ) => {
+
+    const { loading, error, data } = useQuery( getAllProductsQuery, {
+        variables: { query: props.query },
+    } );
+    
     const [ isOpen, setOpen ] = useState( false );
-
 
     const toggleLoginForm = () => {
         setOpen( !isOpen );
@@ -104,4 +107,6 @@ export const ProductsList = () => {
     )
 }
 
-ProductsList.defaultProps = {};
+ProductsList.defaultProps = {
+    query: ''
+};
