@@ -41,7 +41,7 @@ export const header = () => {
                 ) : (
                     <Button
                         onClick = { () => {
-                            document.cookie = "token=null"
+                            document.cookie = 'token=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT'
                             client.resetStore();
                             setUserLoggedIn( false );
                         } }

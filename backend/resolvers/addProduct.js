@@ -21,7 +21,7 @@ const addProduct = async ( parent, args ) => {
 
          if( !product ) {
 
-            const _images = images.split( ',' );
+            const _images = images.split( ', ' );
 
              // create new product instance
              product = new Product( {
@@ -39,7 +39,8 @@ const addProduct = async ( parent, args ) => {
         return {
             status: 'success',
             msg: 'Product has been added to cart',
-            ...product
+            name: product.name,
+            images: product.images
         }
 
         

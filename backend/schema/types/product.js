@@ -4,7 +4,8 @@ const {
     GraphQLObjectType,
     GraphQLString,
     GraphQLList,
-    GraphQLInt
+    GraphQLInt,
+    GraphQLID
 } = graphql;
 
 
@@ -30,6 +31,9 @@ const commentType = new GraphQLObjectType( {
 const ProductType = new GraphQLObjectType( {
     name: 'ProductType',
     fields:{
+        _id: {
+            type: GraphQLID
+        },
         name: {
             type: GraphQLString
         },

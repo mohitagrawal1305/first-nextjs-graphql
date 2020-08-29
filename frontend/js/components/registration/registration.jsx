@@ -129,7 +129,7 @@ export const registration = () => {
 
       if( 'success' === status && token ) {
 
-          document.cookie = `token=${token}`;
+          document.cookie = `token=${token}; path=/`;
       
           client.resetStore();
 

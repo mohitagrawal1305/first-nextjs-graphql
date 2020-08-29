@@ -98,8 +98,8 @@ const addOrUpdateUser = async ( { parent, args, newUser } ) => {
         if( newUser ) {
             await mailer( {
                 to: email,
-                subject: 'Welcome to e-Commerce',
-                text: `Hello ${ name }, Welcome to e-Commerce`
+                subject: 'Welcome to Next Shop',
+                text: `Hello ${ name }, Welcome to Next Shop`
             } );
         } else {
             await mailer( {

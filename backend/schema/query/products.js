@@ -6,16 +6,23 @@ const Product = require( '../../models/Product' );
 
 const {
     GraphQLList,
-    GraphQLString
+    GraphQLString,
+    GraphQLInt,
+    GraphQLID
 } = graphql;
 
-module.exports = {
+const getAllProducts = {
     type: new GraphQLList( ProductType ),
-    args: { query: { type: GraphQLString } },
+    args: {
+        query: { type: GraphQLString },
+        startRecord: { type: GraphQLInt },
+        limit: { type: GraphQLInt },
+    },
     async resolve( parent, args ) {
 
         const { query } = args;
 
+        //limit(3).skip(1)
         
         const products = await Product.find();
         
@@ -30,4 +37,24 @@ module.exports = {
 
         return products;
     }
+};
+
+const getProductById = {
+    type: new GraphQLList( ProductType ),
+    args: {
+        id: { type: GraphQLID }
+    },
+    async resolve( parent, args ) {
+
+        const { id } = args;
+        
+        const product = await Product.findById( id );
+
+        return product;
+    }
+};
+
+module.exports = {
+    getAllProducts,
+    getProductById
 };

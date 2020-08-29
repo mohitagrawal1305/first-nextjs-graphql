@@ -11,7 +11,7 @@ import { useApolloClient } from '@apollo/client';
 import { isEmpty } from 'lodash';
 import { textLink as TextLink } from 'modules/text-link';
 
-export const login = () => {
+export const login = ( props ) => {
 
     const  client = useApolloClient();
 
@@ -51,10 +51,15 @@ export const login = () => {
 
       if( token ) {
 
-        document.cookie = `token=${token}`;
+        document.cookie = `token=${token}; path=/`;
     
         client.resetStore();
-        router.push('/');
+        
+        if( props.loginSuccess ) {
+          props.loginSuccess();
+        } else {
+          router.push('/');
+        }
         } else {
           setErrorMessage( msg );
       }
@@ -71,7 +76,7 @@ export const login = () => {
 
         if( token ) {
 
-            document.cookie = `token=${token}`;
+            document.cookie = `token=${token}; path=/`;
             
             client.resetStore();
             router.push('/');

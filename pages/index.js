@@ -9,7 +9,7 @@ export default function Home() {
   return (
     <Fragment >
       <Head>
-        <title>Welcome to e-Commerce</title>
+        <title>Next Shop</title>
       </Head>
       <HeaderComponent />
       <div className = 'page-with-header' >
