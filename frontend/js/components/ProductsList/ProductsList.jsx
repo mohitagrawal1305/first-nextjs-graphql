@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { useQuery, useMutation } from '@apollo/client';
 import { head } from 'lodash';
 import { CircularProgress } from '@material-ui/core';
@@ -14,7 +15,9 @@ const ProductItem = ( props ) => {
 
     const [ addItemToCard, { loading } ] = useMutation( addToCard );
 
-    const handleAddItemToCart = async () => {
+    const handleAddItemToCart = async ( event ) => {
+
+        event && event.preventDefault();
         
         const token = getToken();
         
@@ -32,6 +35,7 @@ const ProductItem = ( props ) => {
     };
 
     return (
+        <Link href="/product/[id]" as={ `/product/${ props._id }` } >
         <div className = 'products-list__item' >
             <div className = 'products-list__item__image' style = { { backgroundImage: `url( ${ head( props.images ) } )` } } />
             <div className = 'products-list__item__content' >
@@ -51,6 +55,7 @@ const ProductItem = ( props ) => {
                 </Button>
             </div>
         </div>
+        </Link>
     );
 };
 
