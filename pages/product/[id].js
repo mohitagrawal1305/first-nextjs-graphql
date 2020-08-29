@@ -1,6 +1,6 @@
 import { getAllProductIds, getProductById } from '../../backend/resolvers/products';
 
-const Product = ( product ) => {
+const Product = ( { product } ) => {
    
   
     return <p>Product: {product.name}</p>
@@ -9,7 +9,7 @@ const Product = ( product ) => {
   export default Product;
 
   export async function getStaticPaths() {
-    
+
     // Return a list of possible value for id
     const paths = await getAllProductIds();
     
@@ -20,6 +20,7 @@ const Product = ( product ) => {
   }
 
   export async function getStaticProps({ params }) {
+
     // Fetch necessary data for the blog post using params.id
     const product = await getProductById( params.id );
 
