@@ -1,15 +1,14 @@
 import { useQuery, useMutation } from '@apollo/client';
 import { head } from 'lodash';
 import { CircularProgress } from '@material-ui/core';
-//import { useState } from 'react';
+import { useState } from 'react';
 
 import { getAllProductsQuery } from 'query/products';
 import { cartQuery } from 'query/cart';
 import { button as Button } from 'modules/button'
 import { addToCard } from 'mutations/cart';
-//import { dialog as Dialog } from '../dialog';
+import { dialog as Dialog } from '../dialog';
 import { getToken } from 'utils/getToken';
-import { useRouter } from 'next/router';
 
 const ProductItem = ( props ) => {
 
@@ -58,13 +57,11 @@ const ProductItem = ( props ) => {
 export const ProductsList = () => {
 
     const { loading, error, data } = useQuery( getAllProductsQuery );
-    //const [ isOpen, setOpen ] = useState( false );
+    const [ isOpen, setOpen ] = useState( false );
 
-    const router = useRouter();
 
-    const triggerLoginForm = () => {
-        //setOpen( !isOpen );
-        router.push('/login');
+    const toggleLoginForm = () => {
+        setOpen( !isOpen );
     };
 
     if( loading || error ) {
@@ -95,14 +92,14 @@ export const ProductsList = () => {
             <div className = 'products-list' >
                     {
                         getAllProducts.map( item => (
-                            <ProductItem { ...item } key = { item._id } triggerLoginForm = { triggerLoginForm } />
+                            <ProductItem { ...item } key = { item._id } triggerLoginForm = { toggleLoginForm } />
                         ) )
                     }
             </div> 
-            {/* <Dialog
+            <Dialog
                 isOpen = { isOpen }
                 toggleLoginForm = { toggleLoginForm }
-            /> */}
+            />
         </>
     )
 }

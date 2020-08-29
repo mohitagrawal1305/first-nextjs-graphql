@@ -7,7 +7,7 @@ export const addToCard = gql`
                 name
                 images
                 price
-                id
+                _id
             }
         }
     }
