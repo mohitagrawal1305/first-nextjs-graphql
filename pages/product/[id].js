@@ -1,9 +1,20 @@
 import { getAllProductIds, getProductById } from '../../backend/resolvers/products';
+import { Product as ProductComponent } from '../../frontend/js/components/Product';
+import { header as HeaderComponent } from '../../frontend/js/components/header'
+import { cart as Cart } from '../../frontend/js/components/cart';
 
 const Product = ( { product } ) => {
-   
   
-    return <p>Product: {product.name}</p>
+    return (
+      <>
+        <HeaderComponent />
+        <div className = 'page-with-header' >
+          <ProductComponent { ...product } />
+          <Cart />
+        </div>
+        
+      </>
+    );
   }
   
   export default Product;
@@ -26,7 +37,10 @@ const Product = ( { product } ) => {
 
     return {
       props: {
-        product
+        product: {
+          ...product,
+          id: params.id
+        }
       }
     }
 

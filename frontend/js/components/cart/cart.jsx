@@ -3,13 +3,22 @@ import LocalMallIcon from '@material-ui/icons/LocalMall';
 import Drawer from '@material-ui/core/Drawer';
 import { cartQuery } from 'query/cart';
 import { useQuery } from '@apollo/client';
-import { get, isEmpty, find, cloneDeep } from 'lodash';
+import { get, isEmpty, find, cloneDeep, head } from 'lodash';
 import { CircularProgress } from '@material-ui/core';
+import CloseIcon from '@material-ui/icons/Close';
 
 const ProductItem = ( props ) => {
     return (
-        <li>
-            <h1> { props.name } - { props.quantity } </h1>
+        <li className='cart__items__item' >
+            <div className='cart__items__item__image' style = { { backgroundImage: `url( ${ head( props.images ) } )` } } />
+            <div className='cart__items__item__details' >
+                <h1 className='cart__items__item__details__title' > { props.name } </h1>
+                <div className='cart__items__item__details__detail' >
+                    <span> Quantity: { props.quantity }</span>
+                    <span> Price: { props.quantity * props.price } </span>
+                </div>
+            </div>
+            
         </li>
     );  
 };
@@ -77,22 +86,25 @@ export const cart = () => {
 
             <Drawer anchor = { direction } open = { isOpen } onClose={ () => { setOpen( !isOpen ); } }>
                 <div className = { `cart__drawer cart__drawer__directions--${ direction }` } >
+                    <CloseIcon className = 'cart__drawer__close' fontSize='large' onClick = { () => { setOpen( !isOpen ); }  }/>
                    {
                        isEmpty( products ) ? (
-                           <div>
+                           <div className = 'cart__empty' >
                                Add products to cart
                            </div>
                        ) : (
-                           <ul>
-                               {
-                                    products.map( product => {
-                                        return (
-                                            <ProductItem key = { product._id } { ...product } />
-                                        );
-                                    } )
-                               }
-                               Total: Rs. { totalPrice }
-                           </ul>
+                            <>
+                                <ul className='cart__items' >
+                                    {
+                                            products.map( product => {
+                                                return (
+                                                    <ProductItem key = { product._id } { ...product } />
+                                                );
+                                            } )
+                                    }
+                                </ul>
+                                <div className='cart__items__total' >Total: Rs. { totalPrice }</div>
+                            </>
                        )
                    }
                 </div>

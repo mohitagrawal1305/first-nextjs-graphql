@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import SearchIcon from '@material-ui/icons/Search';
+
 import { noop } from 'lodash';
 
 export const search = ( props ) => {

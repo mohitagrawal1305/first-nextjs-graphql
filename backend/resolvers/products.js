@@ -31,6 +31,7 @@ const getProductById = async ( id ) => {
     quantity: product.quantity,
     likes: product.likes,
     comments: product.comments,
+    images: product.images
   };
 };
 

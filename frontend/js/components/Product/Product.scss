@@ -1,0 +1,147 @@
+@import '~scss-globals';
+
+.product {
+  display: flex;
+
+  @include forIpad {
+    flex-direction: column;
+  }
+
+  &__title {
+      font-size: rem( 38 );
+      font-weight: bold;
+      margin-bottom: rem(20);
+      line-height: normal;
+      
+  }
+
+  &__images {
+    width: 60%;
+    display: flex;
+    flex-wrap: wrap;
+    @include forIpad {
+      width: 100%;
+    }
+  }
+  &__image {
+    width: 48%;
+    height: rem(530);
+    background-size: cover;
+    margin-right: rem(10);
+    margin-bottom: rem(10);
+    @include forIpad {
+      height: rem(300);
+      width: 48%;
+    }
+    @include forMobile {
+      height: rem(210);
+      width: 47%;
+    }
+  }
+
+  &__details {
+    width: 40%;
+    position: relative;
+    padding: rem(20);
+
+    @include forIpad {
+      width: 100%;
+      padding: rem(20) 0;
+    }
+    &__title {
+      font-size: rem( 38 );
+      font-weight: bold;
+      margin-bottom: rem(10);
+      line-height: normal;
+      @include forIpad {
+        display: none;
+      }
+    }
+    &__description {
+      font-size: rem( 20 );
+      margin-bottom: rem(10);
+      line-height: normal;
+      color: #504747;
+    }
+    &__price {
+      font-size: rem( 30 );
+      margin-bottom: rem(80);
+      @include forIpad {
+        margin-bottom: rem(50);
+      }
+      @include forMobile {
+        margin-bottom: rem(30);
+      }
+    }
+  }
+  
+  &__item {
+    width: calc( 25% - #{ rem( 23 ) } );
+    height: rem(510);
+    margin-right: rem(30);
+    margin-bottom: rem(30);
+    border-radius: rem(6);
+    &:nth-child(4n) {
+      margin-right: 0;
+    }
+    @extend %box-shadow;
+    background-color: $color-white;
+    overflow: hidden;
+
+    
+
+    &__content {
+      width: 100%;
+      height: 100%;
+      padding: rem(20);
+
+      &__wrapper {
+        display: flex;
+        justify-content: space-between;
+      }
+
+      &__title {
+        font-size: $font-size-18;
+        font-weight: bold;
+        margin-bottom: rem(10);
+        flex: 1;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+      }
+      &__price {
+        font-size: $font-size-16;
+        
+
+      }
+    }
+
+    @include forIpad {
+      &:nth-child(2n + 1) {
+        margin-right: rem( 30 );
+      }
+      &:nth-child(2n) {
+        margin-right: 0;
+      }
+
+      width: calc( 50% - #{ rem( 20 ) } );
+      height: rem(350);
+
+      &__image {
+        width: 100%;
+        height: rem(250);
+      }
+      
+    }
+
+    @include forMobile {
+      width: 100%;
+      height: rem(360);
+      //margin: rem(10);
+      &:nth-child(n) {
+        margin-right: 0;
+      }
+      
+    }
+  }
+}

@@ -44,6 +44,8 @@
   }
 
   &__drawer {
+    position: relative;
+    
     &__directions {
       &--bottom {
         height: 60vh;
@@ -52,13 +54,79 @@
       &--right {
         width: 40vw;
         padding: rem(30);
+        height: 100%;
         @include forIpad {
           width: 60vw;
 
         }
       }
     }
+
+    &__close {
+        position: absolute;
+        right: rem(30);
+        @include forMobile {
+          right: rem(20);
+        }
+        width: rem(30);
+        height: rem(30);
+    }
   }
 
+  &__empty {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: $font-size-22;
+    line-height: normal;
+  }
+
+  &__items {
+    height: calc( 100% - #{ rem( 50 ) } );
+    overflow-y: auto;
+    margin-top: rem( 20 );
+
+    &__item {
+      height: rem( 120 );
+      padding: rem( 20 ) rem( 10 ); 
+      display: flex;
+      & + & {
+        border-top: 1px solid rgb(247, 247, 247);
+      }
+
+      &__image {
+        width: rem( 70 );
+        height: rem( 80 );
+        background-size: cover;
+      }
+
+      &__details {
+        width: calc( 100% - #{ rem( 70 ) } );
+        padding-left: rem( 10 );
+
+        &__title {
+          font-size: $font-size-20;
+          line-height: normal;
+          margin-bottom: rem(5);
+        }
+        &__detail {
+          height: calc( 100% - #{ rem( 30 ) } );
+          align-items: flex-end;
+          display: flex;
+          justify-content: space-between;
+          font-size: $font-size-16;
+        }
+      }
+    }
+
+    &__total {
+      height: rem(50);
+      display: flex;
+      align-items: center;
+      font-size: $font-size-24;
+    }
+  }
     
   }
