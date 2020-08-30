@@ -1,3 +1,5 @@
+import Head from 'next/head'
+
 import { getAllProductIds, getProductById } from '../../backend/resolvers/products';
 import { Product as ProductComponent } from '../../frontend/js/components/Product';
 import { header as HeaderComponent } from '../../frontend/js/components/header'
@@ -7,6 +9,9 @@ const Product = ( { product } ) => {
   
     return (
       <>
+        <Head>
+          <title> { product.name } </title>
+        </Head>
         <HeaderComponent />
         <div className = 'page-with-header' >
           <ProductComponent { ...product } />
