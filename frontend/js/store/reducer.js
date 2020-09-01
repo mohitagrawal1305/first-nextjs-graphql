@@ -1,14 +1,22 @@
+import { get } from "lodash";
+
 export const initialState = {
-    isUserLoggedIn: false
+    isUserLoggedIn: false,
+    searchQuery: ''
 };
 
 export const ACTIONS = {
     SET_USER_LOGGED_IN: 'SET_USER_LOGGED_IN',
-    SET_USER_LOGGED_OUT: 'SET_USER_LOGGED_OUT'
+    SET_USER_LOGGED_OUT: 'SET_USER_LOGGED_OUT',
+    UPDATE_SEARCH_QUERY: 'UPDATE_SEARCH_QUERY'
 };
 
 export const reducer = ( state, action ) => {
-    switch ( action ) {
+
+    const type = get( action, 'type', action );
+    const payload = get( action, 'payload', '' );
+    
+    switch ( type ) {
         case ACTIONS.SET_USER_LOGGED_IN: {
             return {
                 ...state,
@@ -20,6 +28,13 @@ export const reducer = ( state, action ) => {
                 ...state,
                 isUserLoggedIn: false
             };
+        }
+
+        case ACTIONS.UPDATE_SEARCH_QUERY: {
+            return {
+                ...state,
+                searchQuery: payload
+            }
         }
         default:
            return state;

@@ -1,15 +1,18 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import SearchIcon from '@material-ui/icons/Search';
 
-import { noop } from 'lodash';
+import { globalContext } from '../../store';
+import { ACTIONS } from '../../store/reducer';
 
-export const search = ( props ) => {
+export const search = () => {
 
-    const [ value, setValue ] = useState( '' );
+    const { store, dispatch } = useContext( globalContext );
+    
+    const [ value, setValue ] = useState( store.searchQuery );
 
     const onSubmit = ( e ) => {
         e && e.preventDefault();
-        props.onSubmit( value );
+        dispatch( { type: ACTIONS.UPDATE_SEARCH_QUERY, payload: value } );
     };
 
     const onChange = ( e ) => {
@@ -30,6 +33,4 @@ export const search = ( props ) => {
         </form>   
     )
 }
-search.defaultProps = {
-    onSubmit: noop
-};
+search.defaultProps = {};
