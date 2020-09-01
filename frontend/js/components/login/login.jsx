@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { useMutation } from '@apollo/client';
 import { loginMutation, loginUsingGoogleMutation } from 'mutations/login';
 import { useRouter } from 'next/router';
@@ -10,8 +10,12 @@ import { Alert } from '@material-ui/lab';
 import { useApolloClient } from '@apollo/client';
 import { isEmpty } from 'lodash';
 import { textLink as TextLink } from 'modules/text-link';
+import { globalContext } from '../../store';
+import { ACTIONS } from '../../store/reducer';
 
 export const login = ( props ) => {
+
+    const { dispatch } = useContext( globalContext );
 
     const  client = useApolloClient();
 
@@ -54,6 +58,8 @@ export const login = ( props ) => {
         document.cookie = `token=${token}; path=/`;
     
         client.resetStore();
+
+        dispatch( ACTIONS.SET_USER_LOGGED_IN );
         
         if( props.loginSuccess ) {
           props.loginSuccess();

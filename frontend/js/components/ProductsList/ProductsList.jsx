@@ -2,26 +2,26 @@ import Link from 'next/link'
 import { useQuery, useMutation } from '@apollo/client';
 import { head } from 'lodash';
 import { CircularProgress } from '@material-ui/core';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 
 import { getAllProductsQuery } from 'query/products';
 import { cartQuery } from 'query/cart';
 import { button as Button } from 'modules/button'
 import { addToCard } from 'mutations/cart';
 import { dialog as Dialog } from '../dialog';
-import { getToken } from 'utils/getToken';
+import { globalContext } from '../../store';
 
 const ProductItem = ( props ) => {
 
     const [ addItemToCard, { loading } ] = useMutation( addToCard );
 
+    const { store } = useContext( globalContext );
+
     const handleAddItemToCart = async ( event ) => {
 
         event && event.preventDefault();
         
-        const token = getToken();
-        
-        if( token ) {
+        if( store.isUserLoggedIn ) {
             await addItemToCard( {
                 variables: {
                     productId: props._id

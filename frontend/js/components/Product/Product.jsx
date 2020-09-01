@@ -1,18 +1,19 @@
 import { useMutation } from '@apollo/client';
 import { CircularProgress } from '@material-ui/core';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 
 import { cartQuery } from 'query/cart';
 import { button as Button } from 'modules/button'
 import { addToCard } from 'mutations/cart';
 import { dialog as Dialog } from '../dialog';
-import { getToken } from 'utils/getToken';
+import { globalContext } from '../../store';
 
 
 export const Product = ( props ) => {
 
     const [ isOpen, setOpen ] = useState( false );
     const [ addItemToCard, { loading } ] = useMutation( addToCard );
+    const { store } = useContext( globalContext );
 
     const toggleLoginForm = () => {
         setOpen( !isOpen );
@@ -22,9 +23,7 @@ export const Product = ( props ) => {
 
         event && event.preventDefault();
         
-        const token = getToken();
-        
-        if( token ) {
+        if( store.isUserLoggedIn ) {
             await addItemToCard( {
                 variables: {
                     productId: props.id

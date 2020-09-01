@@ -1,24 +1,16 @@
-import { useEffect, useState } from 'react';
+import { useContext } from 'react';
 import Link from 'next/link';
 import { useApolloClient } from '@apollo/client';
 import { button as Button } from 'modules/button'
-import { getToken } from 'utils/getToken';
 import Headroom from 'react-headroom';
+import { globalContext } from '../../store';
+import { ACTIONS } from '../../store/reducer';
 
 export const header = () => {
-    const [ isUserLoggedIn, setUserLoggedIn ] = useState( false );
+
+    const { store, dispatch } = useContext( globalContext );
 
     const client = useApolloClient();
-
-    useEffect(() => {
-        
-        const token = getToken();
-        
-        if( token ) {
-            setUserLoggedIn( true );
-        }
-        
-    }, [] )
 
     return (
         <Headroom>
@@ -34,7 +26,7 @@ export const header = () => {
             <span className='header__search not-desktop' >
             </span>
             {
-                !isUserLoggedIn ? (
+                !store.isUserLoggedIn ? (
                     <Link href="/login">
                     <Button>login</Button>
                     </Link>
@@ -43,7 +35,7 @@ export const header = () => {
                         onClick = { () => {
                             document.cookie = 'token=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT'
                             client.resetStore();
-                            setUserLoggedIn( false );
+                            dispatch( ACTIONS.SET_USER_LOGGED_OUT );
                         } }
                     >
                     Logout
