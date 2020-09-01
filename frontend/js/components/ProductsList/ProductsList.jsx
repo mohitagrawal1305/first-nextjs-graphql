@@ -15,13 +15,11 @@ const ProductItem = ( props ) => {
 
     const [ addItemToCard, { loading } ] = useMutation( addToCard );
 
-    const { store } = useContext( globalContext );
-
     const handleAddItemToCart = async ( event ) => {
 
         event && event.preventDefault();
         
-        if( store.isUserLoggedIn ) {
+        if( props.isUserLoggedIn ) {
             await addItemToCard( {
                 variables: {
                     productId: props._id
@@ -59,11 +57,12 @@ const ProductItem = ( props ) => {
     );
 };
 
+export const ProductsList = () => {
 
-export const ProductsList = ( props ) => {
+    const { store } = useContext( globalContext );
 
     const { loading, error, data } = useQuery( getAllProductsQuery, {
-        variables: { query: props.query },
+        variables: { query: store.searchQuery },
     } );
     
     const [ isOpen, setOpen ] = useState( false );
@@ -100,7 +99,12 @@ export const ProductsList = ( props ) => {
             <div className = 'products-list' >
                     {
                         getAllProducts.map( item => (
-                            <ProductItem { ...item } key = { item._id } triggerLoginForm = { toggleLoginForm } />
+                            <ProductItem
+                                { ...item }
+                                key = { item._id }
+                                triggerLoginForm = { toggleLoginForm }
+                                isUserLoggedIn = { store.isUserLoggedIn }
+                            />
                         ) )
                     }
             </div> 
