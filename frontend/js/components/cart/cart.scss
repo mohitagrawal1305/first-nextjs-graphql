@@ -17,6 +17,7 @@
   @extend %box-shadow;
   &__count {
     font-size: $font-size-12;
+    margin-left: rem(5);
   }
 
   &--mobile {
@@ -37,10 +38,6 @@
     &__count {
       margin-left: rem(5);
     }
-  }
-  
-  svg {
-    margin-right: rem(5);
   }
 
   &__drawer {

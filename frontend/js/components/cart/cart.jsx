@@ -57,7 +57,15 @@ export const cart = () => {
     
     return ( 
         <>
-            <div className = 'cart not-mobile' onClick = { () => { setOpen( !isOpen ); setDirection( 'right' ); } } >
+            <div
+                className = 'cart not-mobile'
+                onClick = { () => {
+                    if( !loading ) {
+                        setOpen( !isOpen );
+                        setDirection( 'right' );
+                    }
+                } }
+            >
                 <LocalMallIcon fontSize='large'/>
                 <span className = 'cart__count' >
                 {
@@ -70,7 +78,15 @@ export const cart = () => {
                 </span>
             </div>
 
-            <div className = 'cart--mobile not-desktop not-ipad' onClick = { () => { setOpen( !isOpen ); setDirection( 'bottom' ); } } >
+            <div
+                className = 'cart--mobile not-desktop not-ipad'
+                onClick = { () => {
+                    if( !loading ) {
+                        setOpen( !isOpen );
+                        setDirection( 'bottom' );
+                    }
+                } }
+            >
                 <LocalMallIcon  />
                 <span className = 'cart--mobile__count' >
                     {
@@ -80,7 +96,6 @@ export const cart = () => {
                             `${ total } items`
                         )
                     }
-                    
                 </span>
             </div>
 
