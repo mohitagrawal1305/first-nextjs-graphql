@@ -83,9 +83,14 @@ export const login = ( props ) => {
         if( token ) {
 
             document.cookie = `token=${token}; path=/`;
-            
+
             client.resetStore();
-            router.push('/');
+            dispatch( ACTIONS.SET_USER_LOGGED_IN );
+            if( props.loginSuccess ) {
+              props.loginSuccess();
+            } else {
+              router.push('/');
+            }
         } else {
             setErrorMessage( msg );
         }
