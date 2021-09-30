@@ -10,5 +10,5 @@ database();
 
 export default graphqlHTTP( {
   schema,
-  graphiql: 'development' === process.env.NODE_ENV
+  graphiql: true
 } );
